@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 675d7f7369c938f4d8254867a4ee74e2, type: 3}
+  m_Name: AttackComboSword
+  m_EditorClassIdentifier: 
+  AttackParameters:
+  - AnimatorOverrideController: {fileID: 22100000, guid: bb95b85e05a4f164ca1560c33954cf2c,
+      type: 2}
+    Damage: 15
+    CostStamina: 30
+  - AnimatorOverrideController: {fileID: 22100000, guid: 3fe38ad8a1c53e14899a8ed6ba7deca5,
+      type: 2}
+    Damage: 20
+    CostStamina: 30
+  - AnimatorOverrideController: {fileID: 22100000, guid: 6e9834665204c0546849c7c2e75a0d98,
+      type: 2}
+    Damage: 30
+    CostStamina: 30
