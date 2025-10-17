@@ -41,7 +41,7 @@ public class Wepon_MeleeCollision : Weapon
 
                 if (hit.transform.TryGetComponent(out I_Damageble i_Damageble))
                 {
-                    i_Damageble.OnFisicalDamage(DamageWepon, savePosition);
+                    i_Damageble.OnFisicalDamage(-DamageWepon, savePosition);
                     possibleTarget.Add(hit.transform);
                 }
             }

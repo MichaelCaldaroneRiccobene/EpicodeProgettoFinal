@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Human_StateAttack : AbstractState
+public class Human_StateAttackBase : AbstractState
 {
     [Header("Setting StateAttack")]
     [SerializeField] protected AbstractState nextState;
@@ -101,8 +101,11 @@ public class Human_StateAttack : AbstractState
     private IEnumerator RestorAttackRoutine()
     {
         yield return null;
+
+        human_Basic_Controller.SetIsAttack(true);
         while (!basicAnimator.IsFinishAttack) yield return null;
         stamina_Controller.OnUpdateStamina(-iteamEquip.Weapon.CostStaminaAttackBase);
+        human_Basic_Controller.SetIsAttack(false);
         RestorCanAttack();
     }
 
@@ -125,6 +128,7 @@ public class Human_StateAttack : AbstractState
 
         basicAnimator.IsFinishAttack = false;
         human_Basic_Controller.IsOnNotHitReact = false;
+        human_Basic_Controller.SetIsAttack(false);
 
         timerCombo = iteamEquip.Weapon.TimeForCallCombo;
     }

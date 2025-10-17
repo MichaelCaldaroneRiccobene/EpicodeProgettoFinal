@@ -17,6 +17,7 @@ public class Stamina_Controller : MonoBehaviour
 
     public int Stamina => stamina;
 
+    public Action<int, int> UpdateStaminaHud;
 
     private void Start()
     {
@@ -29,7 +30,6 @@ public class Stamina_Controller : MonoBehaviour
         int currentStamina = stamina;
         currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
 
-        //Debug.Log("Stamina " + currentStamina + gameObject.name, transform);
         if (currentStamina < stamina)
         {
             stamina = currentStamina;
@@ -41,43 +41,19 @@ public class Stamina_Controller : MonoBehaviour
             stamina = currentStamina;
         }
 
-        if (currentStamina <= 0)
-        {
-            stamina = 0;
-        }
+        UpdateStaminaHud?.Invoke(stamina,maxStamina);
     }
 
     public bool CheckCanUseStamina(int value) => value <= stamina;
 
-    public void UseStamina(int value,Action action)
-    {
-        int currentStamina = stamina;
-        currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
-
-        //Debug.Log("Stamina " + currentStamina + gameObject.name, transform);
-        if (currentStamina < stamina)
-        {
-            stamina = currentStamina;
-            action();
-            if (!onRecoverStamina) coroutineStaminaRecover = StartCoroutine(RecoverStaminaRoutine());
-        }
-        else if (currentStamina > stamina)
-        {
-            stamina = currentStamina;
-        }
-
-        if (currentStamina <= 0)
-        {
-            stamina = 0;
-        }   
-    }
-
     private IEnumerator RecoverStaminaRoutine()
     {
+        onRecoverStamina = true;
         while(stamina < maxStamina)
         {
             yield return waitForSecondsStaminaRecover;
             OnUpdateStamina(recoverStaminaOnTimeStamina);
         }
+        onRecoverStamina = false;
     }
 }

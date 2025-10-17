@@ -39,6 +39,7 @@ public class Player_StateRoll : AbstractState
     private IEnumerator OnRollRoutine()
     {
         if(player_Controller.HasTarget) currentTarget = player_Controller.GetTarget();
+        player_Controller.IsonRollMode = true;
         player_Controller.SetTarget(null);
 
         yield return null;
@@ -66,10 +67,16 @@ public class Player_StateRoll : AbstractState
         if(currentTarget != null) player_Controller.SetTarget(currentTarget);
         currentTarget = null;
 
+        player_Controller.IsonRollMode = false;
         controller.SetUpState(nextState);
     }
 
-    public override void StateLeave() { if (controller.CanSeeDebug) Debug.Log("Uscito dallo State Roll"); }
+    public override void StateLeave()
+    {
+        if (controller.CanSeeDebug) Debug.Log("Uscito dallo State Roll");
+        StopAllCoroutines();
+        player_Controller.IsonRollMode = false;
+    }
 
     private void OnDisable()
     {

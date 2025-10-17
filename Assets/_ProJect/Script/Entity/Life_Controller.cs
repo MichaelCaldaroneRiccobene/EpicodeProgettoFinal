@@ -8,32 +8,36 @@ public class LifeController : MonoBehaviour, I_Damageble
 
     private int life;
 
+    public Action<int,int> UpdateLifeHud;
     public Action<int, Vector3> FisicalDamage;
 
     private void Start() => life = maxLife;
 
     public void OnUpdateLife(int value)
     {
-        int hp = life;
-        hp = Mathf.Clamp(hp + value,0,maxLife);
+        int currentLife = life;
+        currentLife = Mathf.Clamp(currentLife + value,0,maxLife);
 
-        Debug.Log("HP " + hp + gameObject.name,transform);
-        if (hp < life)
+        if (currentLife < life)
         {
-            life = hp;
+            life = currentLife;
         }
-        else if (hp > life)
+        else if (currentLife > life)
         {
-            life = hp;
+            life = currentLife;
             // Heal
         }
 
-        if (hp <= 0)
+        if (currentLife <= 0)
         {
             life = 0;
             Debug.Log("I am Death " + gameObject.name + transform);
         }
+
+        UpdateLifeHud?.Invoke(life,maxLife);
     }
 
+
+    public bool IsDead() => life <= 0;
     public void OnFisicalDamage(int value, Vector3 hitPoint) => FisicalDamage?.Invoke(value, hitPoint);
 }

@@ -11,6 +11,9 @@ public class Player_SerchTarget : MonoBehaviour
     private Player_Controller player_Controller;
     private Player_Input player_Input;
 
+    private Transform possibleTarget;
+    private I_Target currentITarget;
+
     private List<Transform> enemyTransforms = new List<Transform>();
 
     private void Start()
@@ -43,6 +46,8 @@ public class Player_SerchTarget : MonoBehaviour
 
     private void OnSerchEnemy()
     {
+        if (player_Controller.IsonRollMode) return;
+
         if (player_Controller.HasTarget) ClearTarget();
         else OnSphereSerch(true);
     }
@@ -50,6 +55,7 @@ public class Player_SerchTarget : MonoBehaviour
     private void OnSphereSerch(bool canClearTarget)
     {
         float closestDistance = Mathf.Infinity;
+
         SerchAllTargets();
 
         foreach (Transform enemy in enemyTransforms)
@@ -67,26 +73,47 @@ public class Player_SerchTarget : MonoBehaviour
                 if (OnSeeTarget(enemy)) continue;
 
                 closestDistance = distance;
-                player_Controller.SetTarget(enemy);
+                possibleTarget = enemy;
             }
         }
         if (canClearTarget) if (enemyTransforms.Count == 0) ClearTarget();
-    }
 
-    private void ClearTarget() => player_Controller.SetTarget(null);
+        if(possibleTarget != null) SetTargetPlayer(possibleTarget);
+    }
 
     private void ChangeTarget()
     {
         if (!player_Controller.HasTarget) return;
 
+        if(currentITarget != null) currentITarget.SetOnOffTargetHud(false);
+        currentITarget = null;
+
         Transform currentTarget = player_Controller.GetTarget();
         OnSphereSerch(false);
 
-        if (enemyTransforms.Count == 0)
+        if (enemyTransforms.Count == 0) SetTargetPlayer(currentTarget);
+    }
+
+    private void SetTargetPlayer(Transform currentTarget)
+    {
+        player_Controller.SetTarget(currentTarget);
+        if (currentTarget.TryGetComponent(out I_Target target))
         {
-            player_Controller.SetTarget(currentTarget);
+            currentITarget = target;
+            currentITarget.SetOnOffTargetHud(true);
         }
     }
+
+    private void ClearTarget()
+    {
+        player_Controller.SetTarget(null);
+        if (currentITarget != null)
+        {
+            currentITarget.SetOnOffTargetHud(false);
+            currentITarget = null;
+        }
+    }
+
 
     private void SerchAllTargets()
     {

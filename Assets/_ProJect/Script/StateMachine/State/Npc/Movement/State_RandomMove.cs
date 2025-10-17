@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Playables;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class State_RandomMove : AbstractState
+{
+    [Header("Setting RandomMove")]
+    [SerializeField] private float timeUpdateRoutine = 1f;
+    [SerializeField] private float radiusRandomPosition = 10;
+    [SerializeField] private float stopDistanceToDestination = 2f;
+
+    private NavMeshAgent agent;
+
+    public override void StateEnter()
+    {
+        if (controller.CanSeeDebug) Debug.Log("Entrato in State RandomMove");
+        if(agent == null) agent = controller.GetComponent<NavMeshAgent>();
+
+        agent.ResetPath();
+        StartCoroutine(GoOnRandomPointRoutin());
+    }
+
+    private IEnumerator GoOnRandomPointRoutin()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(timeUpdateRoutine);
+        agent.stoppingDistance = stopDistanceToDestination;
+        yield return null;
+
+        while (true)
+        {
+            Vector3 positionToFollow = Utility.RandomPointForAngent(agent, agent.transform.position, radiusRandomPosition);
+            if (NavMesh.SamplePosition(positionToFollow, out NavMeshHit hit, 2f, NavMesh.AllAreas)) positionToFollow = hit.position;
+
+            agent.SetDestination(positionToFollow);
+            while (agent.pathPending) yield return null;
+
+            while (agent.remainingDistance > agent.stoppingDistance) { yield return waitForSeconds; }
+
+            yield return waitForSeconds;
+        }
+    }
+
+    public override void StateLeave()
+    {
+        if (controller.CanSeeDebug) Debug.Log("Uscito dallo State RandomMove");
+
+        StopAllCoroutines();
+        agent.ResetPath();
+    }
+}

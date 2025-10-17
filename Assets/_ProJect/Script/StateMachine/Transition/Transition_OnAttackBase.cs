@@ -1,5 +1,5 @@
 
-public class Transition_OnAttack : AbstractTransition
+public class Transition_OnAttackBase : AbstractTransition
 {
     protected Stamina_Controller stamina_Controller;
     protected Human_BasicInput human_BasicInput;

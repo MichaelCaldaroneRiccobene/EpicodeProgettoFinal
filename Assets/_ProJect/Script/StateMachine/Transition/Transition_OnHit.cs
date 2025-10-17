@@ -3,9 +3,11 @@ using UnityEngine;
 public class Transition_OnHit : AbstractTransition
 {
     [SerializeField] private AbstractState transitionShieldBlock;
+    [SerializeField] private int costStaminaShiedlBlock = 20;
 
     private Human_Basic_Controller human_Basic_Controller;
     private LifeController lifeController;
+    private Stamina_Controller stamina_Controller;
     private bool isHit;
 
     public override void SetUp(FSM_Controller controller)
@@ -13,6 +15,7 @@ public class Transition_OnHit : AbstractTransition
         base.SetUp(controller);
 
         lifeController = controller.GetComponent<LifeController>();
+        stamina_Controller = controller.GetComponent<Stamina_Controller>();
         human_Basic_Controller = controller.GetComponent<Human_Basic_Controller>();
 
         lifeController.FisicalDamage += FisicalDamage;
@@ -33,7 +36,11 @@ public class Transition_OnHit : AbstractTransition
             Vector3 hitDirection = (hitPoint - transform.position).normalized;
             float dot = Vector3.Dot(transform.forward, hitDirection);
 
-            if (dot > 0f) controller.SetUpState(transitionShieldBlock);
+            if (dot > 0f && stamina_Controller.CheckCanUseStamina(costStaminaShiedlBlock))
+            {
+                controller.SetUpState(transitionShieldBlock);
+                stamina_Controller.OnUpdateStamina(-costStaminaShiedlBlock);
+            }
             else TakeDamage(value, true);
         }
         else TakeDamage(value,true);
