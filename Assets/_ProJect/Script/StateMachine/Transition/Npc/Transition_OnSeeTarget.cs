@@ -43,17 +43,14 @@ public class Transition_OnSeeTarget : AbstractTransition
             if (Physics.Raycast(originCast, direction, out RaycastHit hit, sightDistance))
             {
                 if (controller.CanSeeDebug) Debug.DrawLine(originCast, hit.point, Color.red, 0.1f);
+                if (hit.collider == null) return;
 
-                if (hit.collider != null)
-                {
-                    if (hit.collider.TryGetComponent(out I_Team hitEntity))
-                    {
-                        if (hit.collider.TryGetComponent(out LifeController lifeSistem) && lifeSistem.IsDead()) continue;
+                if (!hit.collider.TryGetComponent(out I_Team hitEntity)) return;
 
-                        // Vede Amici :)
-                        if (hitEntity.GetTeam() != npc_Controller.GetTeam()) SetTarget(hit.collider.transform); // Vede Nemici :(
-                    }
-                }
+                if (hit.collider.TryGetComponent(out LifeController lifeSistem) && lifeSistem.IsDead()) continue;
+
+
+                if (hitEntity.GetTeam() != npc_Controller.GetTeam()) SetTarget(hit.collider.transform); // Vede Nemici :(
             }
             else if (controller.CanSeeDebug) Debug.DrawRay(originCast, direction * sightDistance, color, 0.1f);
         }

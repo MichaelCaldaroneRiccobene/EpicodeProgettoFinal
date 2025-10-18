@@ -24,16 +24,11 @@ public abstract class AbstractTransition : MonoBehaviour
 
     public virtual bool IsConditionMet()
     {
-        if (!isOnUpdate)
-        {
-            if (conditionMet) return true;
-            else return false;
-        }
+        if (!isOnUpdate) return conditionMet;
         else
         {
             CheckConditionUpdate();
-            if (conditionMet) return true;
-            else return false;
+            return conditionMet;
         }
     }
 
