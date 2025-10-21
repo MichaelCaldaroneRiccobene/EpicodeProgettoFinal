@@ -25,6 +25,8 @@ public class Human_BasicAnimator : MonoBehaviour
     [SerializeField] protected string parameterBoolOnShield = "OnShield";
     [SerializeField] protected string parameterTriggerShildReact = "ShildReact";
 
+    [SerializeField] protected string parameterTriggerDeath = "Death";
+
     protected Animator animator;
     protected Tween restorPosRotTween;
 
@@ -36,6 +38,7 @@ public class Human_BasicAnimator : MonoBehaviour
 
     #region AnimationMoving
     public virtual void AnimationMoving(float currentSpeed, float maxSpeed) { }
+
     #endregion
 
     #region LogicAttack
@@ -62,9 +65,17 @@ public class Human_BasicAnimator : MonoBehaviour
     #endregion
 
     #region LogicShield
-    public virtual void OnShieldIdle(bool value) => animator.SetBool(parameterBoolOnShield, value);
+    public virtual void OnShieldIdle(bool value, AnimatorOverrideController animOver)
+    {
+        animator.runtimeAnimatorController = animOver;
+        animator.SetBool(parameterBoolOnShield, value);
+    }
 
-    public virtual void OnShieldReact() => SelectAnimation(false, parameterTriggerShildReact);
+    public virtual void OnShieldReact(AnimatorOverrideController animOver)
+    {
+        animator.runtimeAnimatorController = animOver;
+        SelectAnimation(false, parameterTriggerShildReact);
+    }
 
     #endregion
 
@@ -72,12 +83,14 @@ public class Human_BasicAnimator : MonoBehaviour
     public virtual void OnRoll() => SelectAnimation(false, parameterTriggerOnRoll);
     #endregion
 
+    public virtual void OnDeath() => SelectAnimation(true, parameterTriggerDeath);
+
     #region Setting General
 
     public virtual void SelectAnimation(bool isSmooth, string nameAnimation)
     {
         if (isSmooth) animator.CrossFade(nameAnimation, transitionDuration, 0, 0);
-        else animator.Play(nameAnimation, 0, 0f);
+        else animator.Play(nameAnimation,0, 0f);
     }
 
     public virtual void SetOffOnRootMotion(bool value)

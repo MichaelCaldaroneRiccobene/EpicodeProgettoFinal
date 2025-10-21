@@ -20,16 +20,21 @@ public class Player_StateRoll : AbstractState
     public override void StateEnter()
     { 
         if (controller.CanSeeDebug) Debug.Log("Entrato in State Roll"); 
+        SetStart();
+    }
 
-        if(player_Controller == null) player_Controller = controller.GetComponent<Player_Controller>();
+    private void SetStart()
+    {
 
-        if(player_Input ==  null)
+        if (player_Controller == null) player_Controller = controller.GetComponent<Player_Controller>();
+
+        if (player_Input == null)
         {
             player_Input = controller.GetComponent<Player_Input>();
             player_Input.OnHorizontalAndVerticalInput += SetHorizontalAndVerticalInput;
         }
 
-        if(player_Animator == null) player_Animator = controller.GetComponentInChildren<Player_Animator>();
+        if (player_Animator == null) player_Animator = controller.GetComponentInChildren<Player_Animator>();
         currentTarget = null;
         StartCoroutine(OnRollRoutine());
     }
@@ -63,8 +68,7 @@ public class Player_StateRoll : AbstractState
 
         yield return new WaitForSeconds(duration);
         player_Animator.SetOffOnRootMotion(false);
-
-        if(currentTarget != null) player_Controller.SetTarget(currentTarget);
+        if (currentTarget != null) player_Controller.SetTarget(currentTarget);
         currentTarget = null;
 
         player_Controller.IsonRollMode = false;

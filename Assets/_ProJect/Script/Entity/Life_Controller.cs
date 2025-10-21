@@ -5,13 +5,23 @@ public class LifeController : MonoBehaviour, I_Damageble
 {
     [Header("Setting Life")]
     [SerializeField] int maxLife = 100;
+    [SerializeField] private ObjTypePoolling vfxBlood = ObjTypePoolling.HitBlood;
 
     private int life;
+    private Vector3 saveHitPoint;
 
     public Action<int,int> UpdateLifeHud;
     public Action<int, Vector3> FisicalDamage;
 
-    private void Start() => life = maxLife;
+    private void Start()
+    {
+        life = maxLife;
+    }
+
+    private void OnEnable()
+    {
+        life = maxLife;
+    }
 
     public void OnUpdateLife(int value)
     {
@@ -21,6 +31,7 @@ public class LifeController : MonoBehaviour, I_Damageble
         if (currentLife < life)
         {
             life = currentLife;
+            if (saveHitPoint != Vector3.zero) ManagerPooling.Instance.GetObjFromPool(vfxBlood, saveHitPoint, Quaternion.identity);
         }
         else if (currentLife > life)
         {
@@ -31,13 +42,17 @@ public class LifeController : MonoBehaviour, I_Damageble
         if (currentLife <= 0)
         {
             life = 0;
-            Debug.Log("I am Death " + gameObject.name + transform);
         }
 
+        
         UpdateLifeHud?.Invoke(life,maxLife);
     }
 
 
     public bool IsDead() => life <= 0;
-    public void OnFisicalDamage(int value, Vector3 hitPoint) => FisicalDamage?.Invoke(value, hitPoint);
+    public void OnPhysicalDamage(int value, Vector3 hitAttaker, Vector3 hitPoint)
+    {
+        saveHitPoint = hitPoint;
+        FisicalDamage?.Invoke(value, hitAttaker);
+    }
 }

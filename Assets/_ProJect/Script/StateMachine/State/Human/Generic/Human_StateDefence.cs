@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Human_StateDefence : AbstractState
 {
+    protected Shiedl shiedl;
     protected Human_Basic_Controller human_Basic_Controller;
     protected Human_BasicInput basicInput;
     protected Human_BasicAnimator basicAnimator;
@@ -12,6 +13,7 @@ public class Human_StateDefence : AbstractState
     {
         if (controller.CanSeeDebug) Debug.Log("Entrato in State Defence");
 
+        if(shiedl == null) shiedl = controller.GetComponentInChildren<Shiedl>();
         if(human_Basic_Controller == null) human_Basic_Controller = controller.GetComponent<Human_Basic_Controller>();
 
         if (basicInput == null)
@@ -24,8 +26,11 @@ public class Human_StateDefence : AbstractState
 
     public override void StateUpdate() 
     {
-        basicAnimator.OnShieldIdle(isOnBlock); 
-        human_Basic_Controller.IsOnBlockMode = isOnBlock;
+        if (shiedl)
+        {
+            basicAnimator.OnShieldIdle(isOnBlock,shiedl.BlockIdle);
+            human_Basic_Controller.IsOnBlockMode = isOnBlock;
+        }
     }
 
     public virtual void OnDisable()
@@ -40,6 +45,6 @@ public class Human_StateDefence : AbstractState
         isOnBlock = false;
         human_Basic_Controller.IsOnBlockMode = isOnBlock;
 
-        basicAnimator.OnShieldIdle(isOnBlock);
+        basicAnimator.OnShieldIdle(isOnBlock, shiedl.BlockIdle);
     }
 }

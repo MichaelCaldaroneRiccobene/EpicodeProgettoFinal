@@ -18,7 +18,7 @@ public class Transition_OnHit : AbstractTransition
         stamina_Controller = controller.GetComponent<Stamina_Controller>();
         human_Basic_Controller = controller.GetComponent<Human_Basic_Controller>();
 
-        lifeController.FisicalDamage += FisicalDamage;
+        if(lifeController) lifeController.FisicalDamage += FisicalDamage;
     }
 
     public override void CheckConditionUpdate() { if (human_Basic_Controller.IsOnNotHitReact) return; if (isHit) conditionMet = true; }

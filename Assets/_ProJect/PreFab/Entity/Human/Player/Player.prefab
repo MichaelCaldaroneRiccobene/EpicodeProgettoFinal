@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idTeam: 1
+  restorTokenTime: 8
+  tokenStart: 2
 --- !u!114 &1226126523148052002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7048fb05a01d3e489c7f1b03b3522d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 100
+  maxLife: 8517
+  vfxBlood: 1
+  isPlayer: 1
+  shockEffectTime: 0.1
+  shockEffectFrame: 30
 --- !u!114 &8747436115312695888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,8 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 150
   recoverStaminaOnTimeStamina: 1
-  timeForRecoverStamina: 0.2
-  stamina: 0
+  timeForRecoverStamina: 0.15
   onRecoverStamina: 0
 --- !u!143 &4157107926412397014
 CharacterController:
@@ -255,6 +260,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextState: {fileID: 3829064123081846810}
   timeShieldReact: 0.39
+  shakeShield: 2
+  isPlayer: 1
+  shockEffectTime: 0.05
+  shockEffectFrame: 30
 --- !u!114 &5070215229186015072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextState: {fileID: 5380281891996820992}
   timeCheckRoutine: 0.1
-  isOnUpdate: 0
+  isOnUpdate: 1
   transitionShieldBlock: {fileID: 1000835701140353781}
   costStaminaShiedlBlock: 15
 --- !u!1 &7955247594929422415
@@ -692,6 +701,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextState: {fileID: 3829064123081846810}
+  timeShake: 0.2
+  forceShake: 1.5
 --- !u!114 &972709993427574436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedFreeRotation: 10
-  speedLockRotation: 1
+  speedLockRotation: 3
   onlyOnTarget: 1
 --- !u!114 &5951488189246587590
 MonoBehaviour:
@@ -1273,11 +1284,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6959938127964472767, guid: c5ae11759086f4143b8b33d2e4f89c50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 462675606176455888}
   m_SourcePrefab: {fileID: 100100000, guid: c5ae11759086f4143b8b33d2e4f89c50, type: 3}
 --- !u!4 &1081248625094525352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9101350092187534583, guid: c5ae11759086f4143b8b33d2e4f89c50,
+    type: 3}
+  m_PrefabInstance: {fileID: 8164780199996360031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1286211517018538208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6959938127964472767, guid: c5ae11759086f4143b8b33d2e4f89c50,
+    type: 3}
+  m_PrefabInstance: {fileID: 8164780199996360031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &462675606176455888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286211517018538208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661e799ca9926b74ba631888629c4fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockIdle: {fileID: 0}
+  blockReact: {fileID: 0}
+  vfxReact: {fileID: 5773902026001672077}
+--- !u!1 &5773902026001672077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2408903637214552786, guid: c5ae11759086f4143b8b33d2e4f89c50,
     type: 3}
   m_PrefabInstance: {fileID: 8164780199996360031}
   m_PrefabAsset: {fileID: 0}
@@ -1289,6 +1331,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5790824141557527985}
     m_Modifications:
+    - target: {fileID: 247712544097025264, guid: 9ad99786db43a3d4f86ca9aa717d4918,
+        type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 247712544097025264, guid: 9ad99786db43a3d4f86ca9aa717d4918,
+        type: 3}
+      propertyPath: shockEffectFrame
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5717629518821687223, guid: 9ad99786db43a3d4f86ca9aa717d4918,
         type: 3}
       propertyPath: m_LocalPosition.x

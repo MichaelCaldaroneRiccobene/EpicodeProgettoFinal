@@ -11,6 +11,7 @@ public class Player_SerchTarget : MonoBehaviour
     private Player_Controller player_Controller;
     private Player_Input player_Input;
 
+    private LifeController lifeControllerTarget;
     private Transform possibleTarget;
     private I_Target currentITarget;
 
@@ -28,10 +29,16 @@ public class Player_SerchTarget : MonoBehaviour
     {
         if (!player_Controller.HasTarget) return;
 
+        if(lifeControllerTarget && lifeControllerTarget.IsDead())
+        {
+            ClearTarget();
+            return;
+        }
+
         float distanceToTarget = Vector3.Distance(transform.position, player_Controller.GetTarget().position);
         if (OnSeeTarget(player_Controller.GetTarget())) ClearTarget();
 
-        if (player_Controller.HasTarget) Debug.DrawLine(head.position, player_Controller.GetTarget().position, Color.yellow);
+        if (player_Controller.HasTarget) Debug.DrawLine(head.position, player_Controller.GetTarget().position + new Vector3(0,head.position.y,0), Color.yellow);
         if (distanceToTarget > distanceForSerchEnemy) ClearTarget();
     }
 
@@ -96,12 +103,22 @@ public class Player_SerchTarget : MonoBehaviour
 
     private void SetTargetPlayer(Transform currentTarget)
     {
-        player_Controller.SetTarget(currentTarget);
         if (currentTarget.TryGetComponent(out I_Target target))
         {
             currentITarget = target;
             currentITarget.SetOnOffTargetHud(true);
+            if(currentTarget.TryGetComponent(out LifeController life))
+            {
+                lifeControllerTarget = life;
+                if (lifeControllerTarget.IsDead())
+                {
+                    ClearTarget();
+                    return;
+                }
+            }
         }
+
+        player_Controller.SetTarget(currentTarget);
     }
 
     private void ClearTarget()
@@ -111,6 +128,7 @@ public class Player_SerchTarget : MonoBehaviour
         {
             currentITarget.SetOnOffTargetHud(false);
             currentITarget = null;
+            lifeControllerTarget = null;
         }
     }
 

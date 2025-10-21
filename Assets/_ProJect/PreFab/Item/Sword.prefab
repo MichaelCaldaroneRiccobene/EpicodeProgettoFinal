@@ -262,6 +262,9 @@ MonoBehaviour:
   - {fileID: 6301692166532480327}
   - {fileID: 4759185701388316242}
   - {fileID: 4085721046190895082}
+  friendlyFire: 0
+  effectScreen: {fileID: 11400000, guid: 9ae39ec5ce8e86741a14c1eeab6d26b9, type: 2}
+  swordClip: {fileID: 8300000, guid: 021d6b92144c0ac40859646ac2a0dac5, type: 3}
 --- !u!114 &6659078229533599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec36081b3aa4074694ff97d309af113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionWeapon: 0
+  tipeItem: 0
   localPosition: {x: -0.0302, y: 0.0955, z: 0.0183}
   localRotation: {x: 2.692653, y: 11.449862, z: 91.288734}
   PositionArmRight: {fileID: 0}

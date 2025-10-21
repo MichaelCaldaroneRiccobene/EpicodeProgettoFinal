@@ -23,4 +23,29 @@ public static class Utility
         return agent.transform.position;
     }
     #endregion
+
+
+    #region ShockEffect
+    private static bool isOnShockEffect;
+    public static void ShockEffect(MonoBehaviour owner, float start, float end, float frames) => owner.StartCoroutine(ShockEffectRoutine(start,end,frames));
+    private static IEnumerator ShockEffectRoutine(float start,float end,float frames)
+    {
+        if(isOnShockEffect) yield break;
+
+        isOnShockEffect = true;
+        for (int i = 0; i < frames; i++)
+        {
+            Time.timeScale = Mathf.Lerp(start, end, (float)i / frames);
+            yield return null;
+        }
+        Time.timeScale = end;
+        for (int i = 0; i < frames; i++)
+        {
+            Time.timeScale = Mathf.Lerp(end, start, (float)i / frames);
+            yield return null;
+        }
+        isOnShockEffect = false;
+        Time.timeScale = start;
+    }
+    #endregion
 }

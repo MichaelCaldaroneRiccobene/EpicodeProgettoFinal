@@ -10,6 +10,7 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
     [SerializeField] private GameObject hud;
     [SerializeField] private Image imageLife;
     [SerializeField] private Image imageStamina;
+    [SerializeField] private GameObject inStoppableAttack;
 
     [SerializeField] private float walkSpeed = 1.7f;
     [SerializeField] private float jogSpeed = 3.4f;
@@ -26,6 +27,7 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
         agent = GetComponent<NavMeshAgent>();
         agent.speed = jogSpeed;
         hud.SetActive(false);
+        inStoppableAttack.SetActive(false);
     }
 
     public void SetOnOffTargetHud(bool value) => hud.SetActive(value);
@@ -33,4 +35,6 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
     public override void UpdateLifeHud(int life, int maxLife) => imageLife.fillAmount = (float)life /maxLife;
 
     public override void UpdateStaminaHud(int stamina, int maxStamina) => imageStamina.fillAmount = (float)stamina/maxStamina;
+
+    public void EnableDisableInStoppableAttack(bool value) => inStoppableAttack.SetActive(value);
 }

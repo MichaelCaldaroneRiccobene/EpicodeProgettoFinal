@@ -8,6 +8,7 @@ public class State_OnCheckToBlockOrRoll1 : AbstractState
     [SerializeField] private float shieldDurationReactToAttack = 1.5f;
     [Range(0f, 9f)] [SerializeField] private int rangeChanceDefence = 5;
 
+    private Shiedl shiedl;
     private Human_BasicAnimator basicAnimator;
     private Npc_Controller npc_Controller;
     private NavMeshAgent agent;
@@ -21,6 +22,7 @@ public class State_OnCheckToBlockOrRoll1 : AbstractState
         if (npc_Controller == null) npc_Controller = controller.GetComponent<Npc_Controller>();
         if (basicAnimator == null) basicAnimator = controller.GetComponentInChildren<Human_BasicAnimator>();
         if(agent == null) agent = controller.GetComponent<NavMeshAgent>();
+        if(shiedl == null) shiedl = npc_Controller.GetComponentInChildren<Shiedl>();
 
         isOnShieldBlock = false;
     }
@@ -68,8 +70,9 @@ public class State_OnCheckToBlockOrRoll1 : AbstractState
 
     private void EnableDisableBlockMode(bool value)
     {
+        if(!shiedl) return;
         agent.updateRotation = !value;
-        basicAnimator.OnShieldIdle(value);
+        basicAnimator.OnShieldIdle(value, shiedl.BlockIdle);
         npc_Controller.IsOnBlockMode = value;
     }
 

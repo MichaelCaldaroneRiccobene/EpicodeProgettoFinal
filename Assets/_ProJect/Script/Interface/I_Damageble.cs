@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface I_Damageble
 {
-    public void OnFisicalDamage(int value, Vector3 hitPoint);
+    public void OnPhysicalDamage(int value, Vector3 hitAttacker,Vector3 hitPoint);
 }

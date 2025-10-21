@@ -12,7 +12,7 @@ public class Stamina_Controller : MonoBehaviour
     private Coroutine coroutineStaminaRecover;
     private WaitForSeconds waitForSecondsStaminaRecover;    
 
-    public int stamina;
+    private int stamina;
     public bool onRecoverStamina;
 
     public int Stamina => stamina;
@@ -45,6 +45,8 @@ public class Stamina_Controller : MonoBehaviour
     }
 
     public bool CheckCanUseStamina(int value) => value <= stamina;
+
+    public float GetPercentStamina() => (float)stamina/maxStamina;
 
     private IEnumerator RecoverStaminaRoutine()
     {

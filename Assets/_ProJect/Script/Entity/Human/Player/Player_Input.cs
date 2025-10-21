@@ -43,9 +43,6 @@ public class Player_Input : Human_BasicInput
         if (Input.GetKeyDown(KeyCode.Tab)) OnSerchEnemy?.Invoke();
         if (Input.GetKeyDown(KeyCode.E)) OnChangeEnemy?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.C)) lifeController.OnFisicalDamage(-10, transform.forward * 50);
-        if (Input.GetKeyDown(KeyCode.Z)) lifeController.OnFisicalDamage(-10, -transform.forward * 50);
-
         if (Input.GetKeyDown(KeyCode.Alpha1)) Time.timeScale = 0.05f;
         if (Input.GetKeyDown(KeyCode.Alpha2)) Time.timeScale = 1f;
     }

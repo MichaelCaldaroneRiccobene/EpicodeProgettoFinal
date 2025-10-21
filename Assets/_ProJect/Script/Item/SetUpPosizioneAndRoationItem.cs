@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public enum PositionWeapon { ArmRight, ArmLeft, Shield }
+public enum TipeItem { ArmRight, ArmLeft, Shield }
 public class SetUpPosizioneAndRoationItem : MonoBehaviour
 {
     [Header("Setting Position And Rotation Weapon")]
 
-    [SerializeField] private PositionWeapon positionWeapon;
+    [SerializeField] private TipeItem tipeItem;
     [SerializeField] private Vector3 localPosition;
     [SerializeField] private Vector3 localRotation;
 
@@ -15,15 +15,15 @@ public class SetUpPosizioneAndRoationItem : MonoBehaviour
 
     private void Start()
     {
-        switch (positionWeapon)
+        switch (tipeItem)
         {
-            case PositionWeapon.ArmRight:
+            case TipeItem.ArmRight:
                 transform.parent = PositionArmRight;
                 break;
-            case PositionWeapon.ArmLeft:
+            case TipeItem.ArmLeft:
                 transform.parent = PositionArmLeft;
                 break;
-            case PositionWeapon.Shield:
+            case TipeItem.Shield:
                 transform.parent = PositionShield;
                 break;
         }

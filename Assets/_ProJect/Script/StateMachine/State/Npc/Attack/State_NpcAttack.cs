@@ -10,7 +10,7 @@ public class State_NpcAttack : AbstractState
     [SerializeField] protected AbstractState nextState;
     [SerializeField] private NpcMode mode;
 
-    protected Human_Basic_Controller human_Basic_Controller;
+    protected Npc_Controller npc_Controller;
     protected Human_BasicAnimator basicAnimator;
     protected Human_BasicIteamEquip iteamEquip;
 
@@ -23,7 +23,7 @@ public class State_NpcAttack : AbstractState
     {
         if (controller.CanSeeDebug) Debug.Log("Entrato in State NpcAttack ");
 
-        if (human_Basic_Controller == null) human_Basic_Controller = controller.GetComponent<Human_Basic_Controller>();
+        if (npc_Controller == null) npc_Controller = controller.GetComponent<Npc_Controller>();
 
         if (basicAnimator == null) basicAnimator = controller.GetComponentInChildren<Human_BasicAnimator>();
         if (iteamEquip == null) iteamEquip = controller.GetComponent<Human_BasicIteamEquip>();
@@ -55,7 +55,9 @@ public class State_NpcAttack : AbstractState
 
     private void ProcessAttack()
     {
-        human_Basic_Controller.IsOnNotHitReact = false;
+        if (npc_Controller.IsOnBlockMode) return;
+
+        npc_Controller.IsOnNotHitReact = false;
 
         basicAnimator.SetOffOnRootMotion(true);
         basicAnimator.OnAttackMeeleName(iteamEquip.Weapon.AttacksList.AttackParameters[comboNumber].AnimatorOverrideController);
@@ -65,7 +67,8 @@ public class State_NpcAttack : AbstractState
 
         if (comboNumber >= iteamEquip.Weapon.AttacksList.AttackParameters.Count)
         {
-            human_Basic_Controller.IsOnNotHitReact = true;
+            npc_Controller.IsOnNotHitReact = true;
+            npc_Controller.EnableDisableInStoppableAttack(true);
             comboNumber = 0;
         }
     }
@@ -88,22 +91,28 @@ public class State_NpcAttack : AbstractState
 
             yield return null;
 
-            human_Basic_Controller.SetIsAttack(true);
+            npc_Controller.SetIsAttack(true);
             while (!basicAnimator.IsFinishAttack) yield return null;
             stamina_Controller.OnUpdateStamina(-iteamEquip.Weapon.CostStaminaAttackBase);
-            human_Basic_Controller.SetIsAttack(false);
+            npc_Controller.SetIsAttack(false);
             RestorCanAttack();
         }
 
         OnLeave();
     }
 
-    public virtual void RestorCanAttack() => basicAnimator.IsFinishAttack = false;
+    public virtual void RestorCanAttack()
+    {
+        basicAnimator.IsFinishAttack = false;
+        npc_Controller.EnableDisableInStoppableAttack(false);
+    }
 
     private void OnLeave()
     {
         ResetCombo();
         comboNumber = 0;
+        StopAllCoroutines();
+        basicAnimator.SetOffOnRootMotion(false);
         controller.SetUpState(nextState);
     }
 
@@ -112,8 +121,9 @@ public class State_NpcAttack : AbstractState
         comboNumber = 0;
 
         basicAnimator.IsFinishAttack = false;
-        human_Basic_Controller.IsOnNotHitReact = false;
-        human_Basic_Controller.SetIsAttack(false);
+        npc_Controller.IsOnNotHitReact = false;
+        npc_Controller.SetIsAttack(false);
+        npc_Controller.EnableDisableInStoppableAttack(false);
     }
 
     public override void StateLeave()
