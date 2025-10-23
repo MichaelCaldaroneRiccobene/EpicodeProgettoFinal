@@ -33,7 +33,7 @@ public class ParticleMenu : MonoBehaviour {
 	}
 
 
-	// our public function that gets called by our menu's buttons
+	// our public function that gets called by our menu's buttonsList
 	public void Navigate(int i){
 
 		// set the current position in the array to the next or previous position depending on whether i is -1 or 1, defined in our button event

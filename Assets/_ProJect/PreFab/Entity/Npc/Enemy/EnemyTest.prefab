@@ -619,6 +619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 100
   vfxBlood: 1
+  hitSound: {fileID: 11400000, guid: 17cb6b1c1f38a8a4cbf79e7917e68452, type: 2}
 --- !u!114 &504071067597451047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,7 +1682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldDurationReactToAttack: 1.5
-  rangeChanceDefence: 0
+  rangeChanceDefence: 2
 --- !u!114 &5949967816300833085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1777,9 +1778,11 @@ MonoBehaviour:
   nextState: {fileID: 6317102483770952077}
   timeCheckRoutine: 0.1
   isOnUpdate: 1
-  mode: 2
+  mode: 1
   minTimeToWaitBeforeAttackTarget: 5
   maxTimeToWaitBeforeAttackTarget: 10
+  distanceCondition: 0
+  distanceToCheck: 10
 --- !u!1 &7648864407263029746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2476,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4942278699008070012}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1182e48a5a6432d48a3dabc46b06b612,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4417270447657340477}
   m_SourcePrefab: {fileID: 100100000, guid: 1182e48a5a6432d48a3dabc46b06b612, type: 3}
 --- !u!4 &83667313475824889 stripped
 Transform:
@@ -2522,6 +2529,20 @@ MonoBehaviour:
   parameterBoolOnShield: OnShield
   parameterTriggerShildReact: ShildReact
   parameterTriggerDeath: Death
+--- !u!114 &4417270447657340477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839737888106145076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2347d3f49578e804fb0aff42df72de8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footSoundWalk: {fileID: 11400000, guid: a61d7c903656b044db5864172d6d938c, type: 2}
+  footSoundRun: {fileID: 11400000, guid: 4b512ca8faa96d941b5ba04e41a4df6c, type: 2}
 --- !u!4 &6503543142317604750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1182e48a5a6432d48a3dabc46b06b612,

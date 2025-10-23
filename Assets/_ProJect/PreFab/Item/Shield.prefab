@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockIdle: {fileID: 22100000, guid: 46647b05a8f40b54fa1986859d2b6d69, type: 2}
-  blockReact: {fileID: 0}
+  soundBlock: {fileID: 11400000, guid: f30e0e79f1af567439b5ad3c99d30f6c, type: 2}
   vfxReact: {fileID: 2408903637214552786}
 --- !u!1001 &1730264229836129354
 PrefabInstance:

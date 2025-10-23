@@ -6,6 +6,7 @@ public class LifeController : MonoBehaviour, I_Damageble
     [Header("Setting Life")]
     [SerializeField] int maxLife = 100;
     [SerializeField] private ObjTypePoolling vfxBlood = ObjTypePoolling.HitBlood;
+    [SerializeField] private AudioList_SO hitSound;
 
     private int life;
     private Vector3 saveHitPoint;
@@ -32,6 +33,8 @@ public class LifeController : MonoBehaviour, I_Damageble
         {
             life = currentLife;
             if (saveHitPoint != Vector3.zero) ManagerPooling.Instance.GetObjFromPool(vfxBlood, saveHitPoint, Quaternion.identity);
+
+            hitSound.PlaySound(transform);
         }
         else if (currentLife > life)
         {

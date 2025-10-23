@@ -29,12 +29,17 @@ public class Human_BasicAnimator : MonoBehaviour
 
     protected Animator animator;
     protected Tween restorPosRotTween;
+    protected Human_BasicSoundAnimation soundAnimation;
 
     public bool IsFinishAttack {  get; set; }
 
     public Action<bool> OnEnableDisableDoDamage;
 
-    public virtual void Awake() => animator = GetComponentInChildren<Animator>();
+    public virtual void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        soundAnimation = GetComponent<Human_BasicSoundAnimation>();
+    }
 
     #region AnimationMoving
     public virtual void AnimationMoving(float currentSpeed, float maxSpeed) { }
@@ -82,6 +87,9 @@ public class Human_BasicAnimator : MonoBehaviour
     #region LogicRoll
     public virtual void OnRoll() => SelectAnimation(false, parameterTriggerOnRoll);
     #endregion
+
+    public void PlayFootStepsWalk() => soundAnimation.PlayFootStepsWalk();
+    public void PlayFootStepsRun() => soundAnimation.PlayFootStepsRun();
 
     public virtual void OnDeath() => SelectAnimation(true, parameterTriggerDeath);
 

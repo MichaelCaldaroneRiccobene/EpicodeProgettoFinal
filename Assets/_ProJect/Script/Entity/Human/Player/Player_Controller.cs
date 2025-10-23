@@ -2,6 +2,17 @@ using UnityEngine;
 
 public class Player_Controller : Human_Basic_Controller
 {
+    [SerializeField] private GameObject meshPlayer;
+
+    public GameObject MeshPlayer => meshPlayer;
+    public bool IsOnSavePoint {  get; set; }
+
+    public override void Awake()
+    {
+        base.Awake();
+        ManagerSavePoint.Instance.SetPlayer(this);
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

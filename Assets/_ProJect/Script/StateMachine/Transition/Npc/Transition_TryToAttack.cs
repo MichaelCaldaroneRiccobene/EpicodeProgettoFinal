@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Transition_TryToAttack : AbstractTransition
@@ -7,6 +8,9 @@ public class Transition_TryToAttack : AbstractTransition
     [SerializeField] private NpcMode mode;
     [SerializeField] private float minTimeToWaitBeforeAttackTarget = 3;
     [SerializeField] private float maxTimeToWaitBeforeAttackTarget = 10;
+
+    [SerializeField] private DistanceCondition distanceCondition;
+    [SerializeField] private float distanceToCheck;
 
     private Npc_Controller npc_Controller;
     private Stamina_Controller stamina_Controller;
@@ -50,12 +54,18 @@ public class Transition_TryToAttack : AbstractTransition
         if(!npc_Controller.HasTarget) return;
 
         if(!npc_Controller.GetTarget().TryGetComponent(out I_Token token)) return;
+        if (token.GetToken() <= 0) return;
 
-        if(token.GetToken() <= 0) return;
+        float distance = Vector3.Distance(transform.position, npc_Controller.GetTarget().position);
 
-        if (controller.CurrentStateTime > timeWait)
+        switch (distanceCondition)
         {
-            if (staminaPercenter < stamina_Controller.GetPercentStamina()) { token.RemoveToken(); conditionMet = true; }
+            case DistanceCondition.LessThan:
+                if (distance < distanceToCheck && staminaPercenter < stamina_Controller.GetPercentStamina() && controller.CurrentStateTime > timeWait) conditionMet = true;
+                break;
+            case DistanceCondition.GreaterThan:
+                if (distance > distanceToCheck && staminaPercenter < stamina_Controller.GetPercentStamina() && controller.CurrentStateTime > timeWait) conditionMet = true;
+                break;
         }
     }
 }

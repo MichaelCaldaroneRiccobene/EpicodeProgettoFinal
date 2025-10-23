@@ -255,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attacksList: {fileID: 11400000, guid: 79026b5595400ee47af2baa2465e80f3, type: 2}
   costStaminaAttackBase: 30
+  attackListSpecial: {fileID: 0}
   timeForCallCombo: 0.5
   pointsWepon:
   - {fileID: 7180016944513613819}
@@ -264,7 +265,7 @@ MonoBehaviour:
   - {fileID: 4085721046190895082}
   friendlyFire: 0
   effectScreen: {fileID: 11400000, guid: 9ae39ec5ce8e86741a14c1eeab6d26b9, type: 2}
-  swordClip: {fileID: 8300000, guid: 021d6b92144c0ac40859646ac2a0dac5, type: 3}
+  swingAudio: {fileID: 11400000, guid: f5074697992f2bd4f958d88b56256ff4, type: 2}
 --- !u!114 &6659078229533599
 MonoBehaviour:
   m_ObjectHideFlags: 0

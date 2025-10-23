@@ -8,6 +8,7 @@ public class Human_StateHit : AbstractState
     [SerializeField] protected float timeAnimation = 0.96f;
     [SerializeField] protected EffectScreen_SO effectScreen;
 
+
     protected Player_Controller player_Controller;
     protected Human_BasicAnimator basicAnimator;
     protected Coroutine coroutineHit;
