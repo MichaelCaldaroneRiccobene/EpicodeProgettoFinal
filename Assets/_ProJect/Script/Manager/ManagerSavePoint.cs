@@ -17,7 +17,6 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
     {
         base.Awake();
         findSaveInWorld.AddRange(FindObjectsOfType<SavePoint>());
-
     }
 
 

@@ -29,7 +29,10 @@ public class FSM_Controller : MonoBehaviour
             trans.enabled = false;
         }
         transitionsState = null;
+    }
 
+    private void OnEnable()
+    {
         if (startState != null) SetUpState(startState);
         else SetUpState(availableStates[0]);
     }

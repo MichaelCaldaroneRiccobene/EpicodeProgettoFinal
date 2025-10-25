@@ -37,6 +37,8 @@ public class Npc_Animator : Human_BasicAnimator
     #region Setting General
     public override void OnMoveWithRootMotion()
     {
+        if(!agent.enabled) return;
+
         Vector3 horizontalDelta = new Vector3(animator.deltaPosition.x, 0, animator.deltaPosition.z);
         Vector3 finalDelta = horizontalDelta + Vector3.up * agent.velocity.y * Time.deltaTime;
 
