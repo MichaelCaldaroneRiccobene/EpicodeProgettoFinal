@@ -1,9 +1,13 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
 {
+    [SerializeField] private CanvasGroup canvasDead;
+    [SerializeField] private float timeCanvasDead = 1f;
+
     private Player_Controller player_Controller;
 
     private SavePoint currentSavePoint;
@@ -12,6 +16,10 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
     private List<SavePoint> findSaveInWorld = new List<SavePoint>();
 
     private SaveData saveData = new SaveData();
+
+    public List<SavePoint> GetSavePoits => savePoints;
+
+    public SavePoint GetCurrentSavePoint => currentSavePoint;
 
     public override void Awake()
     {
@@ -89,7 +97,30 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
         Save();
     }
 
-    public List<SavePoint> GetSavePoits => savePoints;
+    public void RestorPlayer()
+    {
+        canvasDead.DOFade(1, timeCanvasDead).OnComplete(() =>
+        {
+            player_Controller.gameObject.SetActive(false);
 
-    public SavePoint GetCurrentSavePoint => currentSavePoint;
+            if (currentSavePoint)
+            {
+                player_Controller.transform.position = currentSavePoint.SpawnPoint.position;
+                player_Controller.transform.rotation = currentSavePoint.SpawnPoint.rotation;
+            }
+            else
+            {
+                player_Controller.transform.position = player_Controller.StartPosition;
+                player_Controller.transform.rotation = player_Controller.StartRotation;
+            } 
+            
+            Utility.DelayAction(this, 3, () =>
+            {
+                player_Controller.gameObject.SetActive(true);
+                canvasDead.DOFade(0, timeCanvasDead);
+
+                ManagerEnemy.Instance.RespawnAllEnemies();
+            });
+        });
+    }
 }

@@ -144,5 +144,7 @@ public class Player_StateAttackBase : AbstractState
     public virtual void OnDisable()
     {
        if(basicInput != null) basicInput.OnAttack -= OnAttack;
+
+        basicInput = null;
     }
 }

@@ -22,11 +22,21 @@ public class Wepon_MeleeCollision : Weapon
     private bool canDoAudio;
     private bool canDoDamage;
 
-    public virtual void Start()
+    private void OnEnable()
     {
-        human_Basic_Controller = OwnerWepon.GetComponent<Human_Basic_Controller>();
-        basicAnimator = OwnerWepon.GetComponentInChildren<Human_BasicAnimator>();
-        playerController = OwnerWepon.GetComponent<Player_Controller>();    
+        if (!OwnerWepon) return;
+        if (human_Basic_Controller == null) human_Basic_Controller = OwnerWepon.GetComponent<Human_Basic_Controller>();
+        if (basicAnimator == null) basicAnimator = OwnerWepon.GetComponentInChildren<Human_BasicAnimator>();
+        if (playerController == null ) playerController = OwnerWepon.GetComponent<Player_Controller>();
+
+        SetAction();
+    }
+
+    private void Start()
+    {
+        if (human_Basic_Controller == null) human_Basic_Controller = OwnerWepon.GetComponent<Human_Basic_Controller>();
+        if (basicAnimator == null) basicAnimator = OwnerWepon.GetComponentInChildren<Human_BasicAnimator>();
+        if (playerController == null) playerController = OwnerWepon.GetComponent<Player_Controller>();
 
         SetAction();
     }

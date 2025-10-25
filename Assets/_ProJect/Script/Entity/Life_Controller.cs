@@ -14,14 +14,10 @@ public class LifeController : MonoBehaviour, I_Damageble
     public Action<int,int> UpdateLifeHud;
     public Action<int, Vector3> FisicalDamage;
 
-    private void Start()
-    {
-        life = maxLife;
-    }
-
     private void OnEnable()
     {
         life = maxLife;
+        UpdateLifeHud?.Invoke(life, maxLife);
     }
 
     public void OnUpdateLife(int value)

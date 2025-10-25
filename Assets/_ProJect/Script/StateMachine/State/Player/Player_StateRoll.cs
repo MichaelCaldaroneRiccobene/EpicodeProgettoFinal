@@ -85,5 +85,7 @@ public class Player_StateRoll : AbstractState
     private void OnDisable()
     {
         if(player_Input != null) player_Input.OnHorizontalAndVerticalInput -= SetHorizontalAndVerticalInput;
+
+        player_Input = null;
     }
 }

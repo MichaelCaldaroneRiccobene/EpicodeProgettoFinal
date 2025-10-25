@@ -13,7 +13,7 @@ public class Stamina_Controller : MonoBehaviour
     private WaitForSeconds waitForSecondsStaminaRecover;    
 
     private int stamina;
-    public bool onRecoverStamina;
+    private bool onRecoverStamina;
 
     public int Stamina => stamina;
 

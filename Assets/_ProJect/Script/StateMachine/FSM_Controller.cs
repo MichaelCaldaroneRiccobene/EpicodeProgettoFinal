@@ -33,6 +33,8 @@ public class FSM_Controller : MonoBehaviour
 
     private void OnEnable()
     {
+        if(availableStates.Length == 0) { Debug.LogWarning("No States Available"); return; }
+
         if (startState != null) SetUpState(startState);
         else SetUpState(availableStates[0]);
     }

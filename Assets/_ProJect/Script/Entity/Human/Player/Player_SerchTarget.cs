@@ -17,11 +17,14 @@ public class Player_SerchTarget : MonoBehaviour
 
     private List<Transform> enemyTransforms = new List<Transform>();
 
-    private void Start()
+    private void Awake()
     {
         player_Controller = GetComponent<Player_Controller>();
         player_Input = GetComponent<Player_Input>();
+    }
 
+    private void OnEnable()
+    {
         SetAction();
     }
 

@@ -27,20 +27,22 @@ public class Human_Basic_Controller : MonoBehaviour, I_Team, I_Attack, I_Token
     public bool IsOnNotHitReact {  get; set; }
 
     public virtual void SetTarget(Transform target) => this.target = target;
-    public virtual Transform GetTarget() => target;
-
-    
+    public virtual Transform GetTarget() => target;  
 
     public virtual void Awake()
     {
         lifeController = GetComponent<LifeController>();
         staminaController = GetComponent<Stamina_Controller>();
+        
+        waitTimeRestorToken = new WaitForSeconds(restorTokenTime);
+    }
+    public virtual void OnEnable()
+    {
 
-        if(lifeController) lifeController.UpdateLifeHud += UpdateLifeHud;
+        if (lifeController) lifeController.UpdateLifeHud += UpdateLifeHud;
         staminaController.UpdateStaminaHud += UpdateStaminaHud;
 
         token = tokenStart;
-        waitTimeRestorToken = new WaitForSeconds(restorTokenTime);
     }
 
     public virtual void UpdateLifeHud(int life,int maxLife) { }

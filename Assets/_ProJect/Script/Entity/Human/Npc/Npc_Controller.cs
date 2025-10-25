@@ -25,6 +25,11 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
         base.Awake();
 
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
         agent.speed = jogSpeed;
         hud.SetActive(false);
         inStoppableAttack.SetActive(false);

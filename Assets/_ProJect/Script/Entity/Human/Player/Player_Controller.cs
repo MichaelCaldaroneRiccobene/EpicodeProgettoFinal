@@ -4,6 +4,9 @@ public class Player_Controller : Human_Basic_Controller
 {
     [SerializeField] private GameObject meshPlayer;
 
+    public Vector3 StartPosition { get; set; }
+    public Quaternion StartRotation { get; set; }
+
     public GameObject MeshPlayer => meshPlayer;
     public bool IsOnSavePoint {  get; set; }
 
@@ -11,10 +14,14 @@ public class Player_Controller : Human_Basic_Controller
     {
         base.Awake();
         ManagerSavePoint.Instance.SetPlayer(this);
+
+        StartPosition = transform.position;
+        StartRotation = transform.rotation;
     }
 
-    private void Start()
+    override public void OnEnable()
     {
+        base.OnEnable();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

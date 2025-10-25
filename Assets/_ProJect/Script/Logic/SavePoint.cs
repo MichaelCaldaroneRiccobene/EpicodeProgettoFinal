@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ public class SavePoint : MonoBehaviour
         canvasGroupBlack.DOFade(1, timeForDoActions).OnComplete(() =>
         {
             SpawnButtonsForSavePoint();
+            ManagerEnemy.Instance.RespawnAllEnemies();
 
             pannelUI.SetActive(true);
             meshTest.SetActive(true);
@@ -104,7 +106,8 @@ public class SavePoint : MonoBehaviour
         foreach(SavePoint savePoint in ManagerSavePoint.Instance.GetSavePoits)
         {
             Button button = Instantiate(buttonForSavePoints, scrollParent);
-            button.GetComponent<Image>().sprite = savePoint.imagePlace;
+            button.GetComponent<Image>().sprite = savePoint.Image;
+            button.GetComponentInChildren<TextMeshProUGUI>().text = savePoint.Name;
 
             button.onClick.AddListener(() =>
             {

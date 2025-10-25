@@ -32,19 +32,17 @@ public class Player_StateIdleMovement : AbstractState
 
     private void SetUp()
     {
-        if (player_Input == null)
-        {
-            player_Input = controller.GetComponent<Player_Input>();
-            player_Input.OnHorizontalAndVerticalInput += SetHorizontalAndVerticalInput;
-            player_Input.OnWalk += OnWalk;
-        }
+        if (player_Input == null) player_Input = controller.GetComponent<Player_Input>();
 
-        if(characterController == null) characterController = controller.GetComponent<CharacterController>();
+        if (characterController == null) characterController = controller.GetComponent<CharacterController>();
 
         if(player_Animator == null) player_Animator = controller.GetComponentInChildren<Player_Animator>();
 
         player_Animator.SetOffOnRootMotion(false);
         player_Animator.ReturnIdle();
+
+        player_Input.OnHorizontalAndVerticalInput += SetHorizontalAndVerticalInput;
+        player_Input.OnWalk += OnWalk;
     }
 
     private void SetHorizontalAndVerticalInput(float horizontal, float vertical) { horizontalInput = horizontal; verticalInput = vertical; }

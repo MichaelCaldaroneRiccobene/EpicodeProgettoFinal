@@ -48,4 +48,13 @@ public static class Utility
         Time.timeScale = start;
     }
     #endregion
+
+
+    public static void DelayAction(MonoBehaviour owner, float delay, System.Action action) => owner.StartCoroutine(DelayActionRoutine(delay, action));
+
+    private static IEnumerator DelayActionRoutine(float delay, System.Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
 }

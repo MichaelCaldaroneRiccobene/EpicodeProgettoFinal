@@ -108,7 +108,7 @@ MonoBehaviour:
   idTeam: 1
   restorTokenTime: 8
   tokenStart: 2
-  meshPlayer: {fileID: 5616557565762819275}
+  meshPlayer: {fileID: 1726596575516701997}
 --- !u!114 &1226126523148052002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad8716716941654a8d0576be6e902e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 2777893886441229581}
+  nextState: {fileID: 4747691544561864695}
   timeCheckRoutine: 0.1
   isOnUpdate: 0
 --- !u!1 &4967707772984651374
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad8716716941654a8d0576be6e902e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 2777893886441229581}
+  nextState: {fileID: 0}
   timeCheckRoutine: 0.1
   isOnUpdate: 0
 --- !u!1 &6460140537970533008
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad8716716941654a8d0576be6e902e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 2777893886441229581}
+  nextState: {fileID: 4747691544561864695}
   timeCheckRoutine: 0.1
   isOnUpdate: 0
 --- !u!114 &8223411427589995605
@@ -729,7 +729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 581067951190280530}
-  - component: {fileID: 2777893886441229581}
+  - component: {fileID: 4747691544561864695}
   m_Layer: 7
   m_Name: Death
   m_TagString: Untagged
@@ -752,7 +752,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8766179907288456789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2777893886441229581
+--- !u!114 &4747691544561864695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -761,7 +761,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8852156037525423918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b0436580be3bcb48999775931523b1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4987e7aa7528ac4469ce4f886381087e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeToWaiteAnimationDead: 3
@@ -969,7 +969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad8716716941654a8d0576be6e902e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextState: {fileID: 2777893886441229581}
+  nextState: {fileID: 4747691544561864695}
   timeCheckRoutine: 0.1
   isOnUpdate: 0
 --- !u!1001 &1961163301930469500
