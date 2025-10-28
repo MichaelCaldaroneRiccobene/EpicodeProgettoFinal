@@ -11,4 +11,10 @@ public class Player_UI : GenericSingleton<Player_UI>
     public void UpdateLife(int life,int maxLife) => imageLife.fillAmount = (float)life / maxLife;
 
     public void UpdateStamina(int stamina, int maxStamina) => imageStamina.fillAmount = (float)stamina / maxStamina;
+
+    public void ShowUIOrHide(bool value)
+    {
+        imageLife.enabled = value;
+        imageStamina.enabled = value;
+    }
 }

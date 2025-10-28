@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 4157107926412397014}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +184,6 @@ MonoBehaviour:
   maxStamina: 150
   recoverStaminaOnTimeStamina: 1
   timeForRecoverStamina: 0.15
-  onRecoverStamina: 0
 --- !u!143 &4157107926412397014
 CharacterController:
   m_ObjectHideFlags: 0
@@ -778,6 +777,7 @@ GameObject:
   - component: {fileID: 1886398928224642858}
   - component: {fileID: 2615454072108512343}
   - component: {fileID: 6598544662153632947}
+  - component: {fileID: 7245309904855453543}
   m_Layer: 7
   m_Name: Hit
   m_TagString: Untagged
@@ -863,6 +863,21 @@ MonoBehaviour:
   costRollStamina: 15
   delay: 0.5
   isOnDelay: 1
+--- !u!114 &7245309904855453543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872711643305118208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad8716716941654a8d0576be6e902e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextState: {fileID: 4747691544561864695}
+  timeCheckRoutine: 0.1
+  isOnUpdate: 0
 --- !u!1 &8924482769469096623
 GameObject:
   m_ObjectHideFlags: 0

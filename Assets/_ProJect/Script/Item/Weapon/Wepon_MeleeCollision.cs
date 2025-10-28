@@ -58,14 +58,11 @@ public class Wepon_MeleeCollision : Weapon
 
         for (int i = 0; i < pointsWepon.Length - 1; i++)
         {
-            canDoAudio = false;
-
             if (Physics.Linecast(pointsWepon[i].position, pointsWepon[i + 1].position, out RaycastHit hit))
             {
                 if (hit.transform.transform == OwnerWepon || possibleTarget.Contains(hit.transform) || saveTempTransformHit.Contains(hit.transform)) continue;
                 if(hit.transform.TryGetComponent(out I_Team team)) { if (team.GetTeam() == human_Basic_Controller.GetTeam() && !friendlyFire) continue; }
 
-                Debug.Log(hit.transform);
                 saveTempTransformHit.Add(hit.transform);
 
                 if (!canDoAudio)
@@ -87,6 +84,7 @@ public class Wepon_MeleeCollision : Weapon
                 }
             }
         }
+        canDoAudio = false;
     }
 
     private void OnCanDoDamage(bool canDoDamage)

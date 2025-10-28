@@ -52,6 +52,6 @@ public class State_FollowTarget : AbstractState
         if (controller.CanSeeDebug) Debug.Log("Uscito dallo State FollowEntity");
 
         StopAllCoroutines();
-        agent.ResetPath();
+        if(agent.enabled) agent.ResetPath();
     }
 }

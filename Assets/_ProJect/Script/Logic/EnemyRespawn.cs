@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyRespawn : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class EnemyRespawn : MonoBehaviour
 
     private Vector3 startPosition;
     private Quaternion startRotation;
+
+    public UnityEvent OnMeDisable;
 
     public bool EnableOnSpot => enableOnSpot;
 
@@ -24,6 +27,8 @@ public class EnemyRespawn : MonoBehaviour
         transform.position = startPosition;
         transform.rotation = startRotation;
     }
+
+    private void OnDisable() => OnMeDisable?.Invoke();
 
     private void AddMeInTheList() => ManagerEnemy.Instance.RegisterEnemyRespawn(this);
 }

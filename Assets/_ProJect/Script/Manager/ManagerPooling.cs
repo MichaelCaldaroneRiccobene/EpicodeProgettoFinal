@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObjTypePoolling { None,HitBlood,Audio }
+public enum ObjTypePoolling { None,HitBlood,Audio, ImpactBoss,HitSword }
 public class ManagerPooling : GenericSingleton<ManagerPooling>
 {
     [SerializeField] private List<PoolObject_SO> poolObjectsList;
@@ -71,7 +71,7 @@ public class ManagerPooling : GenericSingleton<ManagerPooling>
         }
         else return SpawnForPool(type, position, rotation);
     }
-    public Pool_Obj GetAudioFromPool(ObjTypePoolling type, Vector3 position, Quaternion rotation,AudioClip audioClip,float volume,float minPitch,float maxPitch,bool isRandomPitch,bool is3DAudio)
+    public Pool_Obj GetAudioFromPool(ObjTypePoolling type, Vector3 position, Quaternion rotation,AudioClip audioClip,float volume,float minPitch,float maxPitch,float maxDistance,bool isRandomPitch,bool is3DAudio)
     {
         if (!poolDictionary.TryGetValue(type, out Queue<Pool_Obj> pool) && type != ObjTypePoolling.Audio)
         {
@@ -91,6 +91,8 @@ public class ManagerPooling : GenericSingleton<ManagerPooling>
 
                 audio.pitch = isRandomPitch ? Random.Range(minPitch, maxPitch) : maxPitch;
                 audio.spatialBlend = is3DAudio ? 1 : 0;
+
+                audio.maxDistance = maxDistance;
 
                 objToSpawn.SetUpNewTime(audio.clip.length);
             }

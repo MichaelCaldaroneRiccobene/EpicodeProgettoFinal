@@ -40,6 +40,7 @@ public class Player_StateAttackBase : AbstractState
         if(stamina_Controller ==  null) stamina_Controller = controller.GetComponent<Stamina_Controller>();
 
         ResetCombo();
+        OnAttack();
     }
 
     public override void StateUpdate() { TimerCombo(); }

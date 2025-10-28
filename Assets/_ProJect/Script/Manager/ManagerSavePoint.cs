@@ -102,6 +102,7 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
         canvasDead.DOFade(1, timeCanvasDead).OnComplete(() =>
         {
             player_Controller.gameObject.SetActive(false);
+            Player_UI.Instance.ShowUIOrHide(false);
 
             if (currentSavePoint)
             {
@@ -118,6 +119,7 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
             {
                 player_Controller.gameObject.SetActive(true);
                 canvasDead.DOFade(0, timeCanvasDead);
+                Player_UI.Instance.ShowUIOrHide(true);
 
                 ManagerEnemy.Instance.RespawnAllEnemies();
             });

@@ -12,7 +12,7 @@ public class AudioList_SO : ScriptableObject
         if (ManagerPooling.Instance) ManagerPooling.Instance.GetAudioFromPool(
             ObjTypePoolling.Audio, parent.position, Quaternion.identity,
             AudioParameters.AudioClips[Random.Range(0, AudioParameters.AudioClips.Length)],
-            AudioParameters.Volume, AudioParameters.MinPitch, AudioParameters.MaxPitch,
+            AudioParameters.Volume, AudioParameters.MinPitch, AudioParameters.MaxPitch, AudioParameters.MaxDistance3D,
             AudioParameters.IsRandomPitch, AudioParameters.Is3D);
     }
 }
@@ -24,6 +24,8 @@ public class AudioParameters
     public float Volume = 1f;
     public float MinPitch = 1f;
     public float MaxPitch = 1f;
+
+    public float MaxDistance3D = 10f;
 
     public bool IsRandomPitch = true;
     public bool Is3D = true;

@@ -617,6 +617,7 @@ Transform:
   - {fileID: 702741480574684529}
   - {fileID: 405405302362557651}
   - {fileID: 7293318620648916713}
+  - {fileID: 5711255598293799985}
   - {fileID: 5984855277015128342}
   - {fileID: 8381724678414233793}
   - {fileID: 4409022262148643961}
@@ -948,7 +949,7 @@ Transform:
   m_Children:
   - {fileID: 2493308980431399408}
   - {fileID: 8089521628750299965}
-  m_Father: {fileID: 7293318620648916713}
+  m_Father: {fileID: 5336638913019961008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3845898003937230429
 GameObject:
@@ -1044,6 +1045,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableOnSpot: 1
+  OnMeDisable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9069876117554126003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,7 +1282,6 @@ Transform:
   m_Children:
   - {fileID: 8223724209959414586}
   - {fileID: 5557785454027169460}
-  - {fileID: 5711255598293799985}
   m_Father: {fileID: 5336638913019961008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7151935947106415054

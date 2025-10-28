@@ -23,5 +23,5 @@ MonoBehaviour:
     CostStamina: 30
   - AnimatorOverrideController: {fileID: 22100000, guid: 6e9834665204c0546849c7c2e75a0d98,
       type: 2}
-    Damage: 30
+    Damage: 25
     CostStamina: 30

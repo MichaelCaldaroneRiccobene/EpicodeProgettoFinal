@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacksList: {fileID: 11400000, guid: 21b5a339309c19644bb742a29b6a3f70, type: 2}
-  costStaminaAttackBase: 30
+  costStaminaAttackBase: 40
   attackListSpecial: {fileID: 11400000, guid: 5ca7d5d4d6cc00c489ba82131ddd12ba, type: 2}
   timeForCallCombo: 0.5
   pointsWepon:

@@ -15,13 +15,13 @@ MonoBehaviour:
   AttackParameters:
   - AnimatorOverrideController: {fileID: 22100000, guid: 59053a2554987f645b3a1384e0e59a0d,
       type: 2}
-    Damage: 15
+    Damage: 30
     CostStamina: 30
   - AnimatorOverrideController: {fileID: 22100000, guid: 1764b11c767d6e24bb4c4f30df2db4bd,
       type: 2}
-    Damage: 15
+    Damage: 30
     CostStamina: 30
   - AnimatorOverrideController: {fileID: 22100000, guid: cd279121df9b56b479e96830ee318ec3,
       type: 2}
-    Damage: 15
+    Damage: 45
     CostStamina: 30

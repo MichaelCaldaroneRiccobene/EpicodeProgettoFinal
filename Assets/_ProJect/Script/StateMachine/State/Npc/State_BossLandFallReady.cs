@@ -6,11 +6,10 @@ using UnityEngine.AI;
 
 public class State_BossLandFallReady : AbstractState
 {
-    [SerializeField] private AnimatorOverrideController landFallAnimator;
     [SerializeField] private AbstractState nextState;
+    [SerializeField] private AudioList_SO impactClip;
     [SerializeField] private float yPosition = 0f;
     [SerializeField] private float moveDuration = 2f;
-    [SerializeField] private GameObject landImpact;
 
     private NavMeshAgent agent;
     private Human_BasicAnimator basicAnimator;
@@ -23,9 +22,13 @@ public class State_BossLandFallReady : AbstractState
         basicAnimator.SetOffOnRootMotion(false);
         agent.enabled = false;
 
-        controller.transform.DOMoveY(yPosition, moveDuration).OnComplete(() =>
-        {          
+        controller.transform.DOMoveY(yPosition, moveDuration).SetEase(Ease.InCubic).OnComplete(() =>
+        {
+            CameraShake.Instance.OnCameraShake(controller.transform.position, 0.5f, 2f, 10f);
             controller.SetUpState(nextState);
+
+            ManagerPooling.Instance.GetObjFromPool(ObjTypePoolling.ImpactBoss, controller.transform.position, Quaternion.identity);
+            impactClip.PlaySound(controller.transform);
         });
     }
 
