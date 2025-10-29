@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +14,7 @@ public static class Utility
 
         for (int i = 0; i < numberOfTentativ; i++)
         {
-            Vector3 randomPosition = Random.insideUnitSphere * range + startPosition;
+            Vector3 randomPosition = UnityEngine.Random.insideUnitSphere * range + startPosition;
             randomPosition.y = agent.transform.position.y;
 
             if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 1, NavMesh.AllAreas)) return hit.position;
@@ -56,5 +58,10 @@ public static class Utility
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();
+    }
+
+    public static void FadeBlackOrOutBlack(CanvasGroup canvasGroup,float value,float time,Ease ease,GameObject gameObject, Action action)
+    {
+        canvasGroup.DOFade(value, time).SetEase(ease).SetLink(gameObject).OnComplete(() => { action?.Invoke(); });
     }
 }

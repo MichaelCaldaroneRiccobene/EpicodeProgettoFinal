@@ -6,4 +6,10 @@ public class SaveData
 {
     public string IDCurrentSavePoint;
     public List<string> IDCurrentSavePoints = new List<string>();
+
+    public void NewGame()
+    {
+        IDCurrentSavePoint = string.Empty;
+        IDCurrentSavePoints.Clear();
+    }
 }
