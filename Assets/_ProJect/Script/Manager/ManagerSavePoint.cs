@@ -33,8 +33,11 @@ public class ManagerSavePoint : GenericSingleton<ManagerSavePoint>
         Load();
         if (currentSavePoint)
         {
-            player_Controller.transform.position = currentSavePoint.SpawnPoint.position;
-            player_Controller.transform.rotation = currentSavePoint.SpawnPoint.rotation;
+            Debug.Log("Load Save Point: " + currentSavePoint.Name); 
+            Utility.DelayAction(this, 0.1f, () => {
+                player_Controller.transform.position = currentSavePoint.SpawnPoint.position;
+                player_Controller.transform.rotation = currentSavePoint.SpawnPoint.rotation;
+            });
         }
 
     }

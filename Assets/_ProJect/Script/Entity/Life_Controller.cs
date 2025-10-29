@@ -47,6 +47,11 @@ public class LifeController : MonoBehaviour, I_Damageble
         UpdateLifeHud?.Invoke(life,maxLife);
     }
 
+    public void RestorHp()
+    {
+        life = maxLife;
+        UpdateLifeHud?.Invoke(life, maxLife);
+    }
 
     public bool IsDead() => life <= 0;
     public void OnPhysicalDamage(int value, Vector3 hitAttaker, Vector3 hitPoint)

@@ -48,9 +48,9 @@ public class SavePoint : MonoBehaviour
         ManagerSavePoint.Instance.SetCurrentSavePlayer(this);
         isOnSavePoint = true;
 
-
         canvasGroupBlack.DOFade(1, timeForDoActions).OnComplete(() =>
         {
+            RestorPlayerHp();
             SpawnButtonsForSavePoint();
             ManagerEnemy.Instance.RespawnAllEnemies();
 
@@ -90,6 +90,11 @@ public class SavePoint : MonoBehaviour
                 canvasGroupBlack.DOFade(0, timeForDoActions);
             });
         });
+    }
+
+    private void RestorPlayerHp()
+    {
+        if(currentPlayerController.TryGetComponent(out LifeController life)) life.RestorHp();
     }
 
     public void SitUpExitActions()
