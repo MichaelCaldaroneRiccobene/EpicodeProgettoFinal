@@ -29,8 +29,18 @@ public class Player_UI : GenericSingleton<Player_UI>
 
         if(isUpdateYellowStamina)
         {
-            if (sliderStaminaYellow.value > sliderStamina.value) sliderStaminaYellow.value -= speedUpdateYellowLife * Time.deltaTime;
-            else isUpdateYellowStamina = false;
+            if (sliderStaminaYellow.value > sliderStamina.value)
+            {
+                sliderStaminaYellow.value -= speedUpdateYellowLife * Time.deltaTime;
+            }
+            else if(sliderStaminaYellow.value < sliderStamina.value)
+            {
+                sliderStaminaYellow.value = sliderStamina.value;
+            }
+            else if(sliderStaminaYellow.value == sliderStamina.value)
+            {
+                isUpdateYellowStamina = false;
+            }
         }
     }
 

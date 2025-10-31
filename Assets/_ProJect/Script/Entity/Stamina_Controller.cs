@@ -62,6 +62,8 @@ public class Stamina_Controller : MonoBehaviour
             yield return waitForSecondsStaminaRecover;
             OnUpdateStamina(recoverStaminaOnTimeStamina);
         }
+
+        coroutineStaminaRecover = null; 
         onRecoverStamina = false;
     }
 
@@ -73,6 +75,11 @@ public class Stamina_Controller : MonoBehaviour
 
     private void OnDisable()
     {
+        if(coroutineStaminaRecover != null)
+        {
+            StopCoroutine(coroutineStaminaRecover);
+            coroutineStaminaRecover = null;
+        }
         StopAllCoroutines();
         onRecoverStamina = false;
     }

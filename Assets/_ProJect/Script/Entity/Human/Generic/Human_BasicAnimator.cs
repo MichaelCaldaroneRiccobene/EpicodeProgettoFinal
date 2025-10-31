@@ -88,8 +88,16 @@ public class Human_BasicAnimator : MonoBehaviour
     public virtual void OnRoll() => SelectAnimation(false, parameterTriggerOnRoll);
     #endregion
 
-    public void PlayFootStepsWalk() => soundAnimation.PlayFootStepsWalk();
-    public void PlayFootStepsRun() => soundAnimation.PlayFootStepsRun();
+    public void PlayFootStepsWalk()
+    {
+        soundAnimation.PlayFootStepsWalk();
+        Debug.Log("Play Footstep Walk");
+    }
+    public void PlayFootStepsRun()
+    {
+        soundAnimation.PlayFootStepsRun();
+        Debug.Log("Play Footstep Run");
+    }
 
     public virtual void OnDeath() => SelectAnimation(true, parameterTriggerDeath);
 

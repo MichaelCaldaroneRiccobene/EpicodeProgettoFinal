@@ -41,7 +41,6 @@ public class LifeController : MonoBehaviour, I_Damageble
             life = currentLife;
             if (saveHitPoint != Vector3.zero) ManagerPooling.Instance.GetObjFromPool(vfxBlood, saveHitPoint, Quaternion.identity);
 
-            Debug.Log("Physical Damage NEW: " + value, transform);
             hitSound.PlaySound(transform);
         }
         else if (currentLife > life)
@@ -70,7 +69,5 @@ public class LifeController : MonoBehaviour, I_Damageble
     {
         saveHitPoint = hitPoint;
         FisicalDamage?.Invoke(value, hitAttaker);
-
-        Debug.Log("Physical Damage: " + value,transform);
     }
 }

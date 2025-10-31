@@ -26,7 +26,7 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
     private NavMeshAgent agent;
 
     private bool isUpdateYellowLife;
-    private bool isUpdateStamina;
+    private bool isUpdateYellowStamina;
 
     public float WalkSpeed => walkSpeed;
     public float JogSpeed => jogSpeed;
@@ -54,10 +54,20 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
             else isUpdateYellowLife = false;
         }
 
-        if (isUpdateStamina)
+        if (isUpdateYellowStamina)
         {
-            if (sliderStaminaYellow.value > sliderStamina.value) sliderStaminaYellow.value -= speedUpdateYellowLife * Time.deltaTime;
-            else isUpdateStamina = false;
+            if (sliderStaminaYellow.value > sliderStamina.value)
+            {
+                sliderStaminaYellow.value -= speedUpdateYellowLife * Time.deltaTime;
+            }
+            else if (sliderStaminaYellow.value < sliderStamina.value)
+            {
+                sliderStaminaYellow.value = sliderStamina.value;
+            }
+            else if (sliderStaminaYellow.value == sliderStamina.value)
+            {
+                isUpdateYellowStamina = false;
+            }
         }
     }
 
@@ -72,7 +82,7 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
     {
         sliderStamina.value = (float)stamina / maxStamina;
 
-        if (!isUpdateStamina) { Utility.DelayAction(this, delayUpdateYellowLife, () => { isUpdateStamina = true; }); }
+        if (!isUpdateYellowStamina) { Utility.DelayAction(this, delayUpdateYellowLife, () => { isUpdateYellowStamina = true; }); }
     }
 
     public void SetOnOffTargetHud(bool value) => hud.SetActive(value);
