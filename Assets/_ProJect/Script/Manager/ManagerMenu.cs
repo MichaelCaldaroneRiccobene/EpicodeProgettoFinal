@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum TypeUI { Resume,Continue,Option,Credit,ReturnMenu,Quit }
+public enum TypeUI { Resume,Continue,Option,Credit,ReturnMenu,Quit,None }
 [System.Serializable]
 public class ButtonList
 {
@@ -21,22 +21,28 @@ public class MenuPanel
     public GameObject panelObj;
 }
 
-public class ManagerMenu : MonoBehaviour
+public class ManagerMenu : GenericSingleton<ManagerMenu>
 {
-    [SerializeField] private CanvasGroup canvasBlackScreen;
-    [SerializeField] private float timeScreenBlackStart = 10f;
+    [SerializeField] protected GameObject pannelAll;
+    [SerializeField] protected CanvasGroup canvasBlackScreen;
+    [SerializeField] protected float timeScreenBlackStart = 10f;
 
-    [SerializeField] private string nameLevel = "Level1";
+    [SerializeField] protected string nameLevel = "Level1";
 
-    private SaveData saveData = new SaveData();
-    private bool hasSave;
+    public bool EnablePannelAll;
 
-    private void Awake()
+    protected SaveData saveData = new SaveData();
+    protected bool hasSave;
+
+    public override void Awake()
     {
+        base.Awake();
         Utility.FadeBlackOrOutBlack(canvasBlackScreen, 0, timeScreenBlackStart, Ease.InQuad,gameObject, () => { });
         Load();
 
         SetupButtons();
+
+        pannelAll.SetActive(EnablePannelAll);
     }
 
     private void Load()
@@ -53,20 +59,24 @@ public class ManagerMenu : MonoBehaviour
         if (saveData.IDCurrentSavePoint != string.Empty) hasSave = true;
     }
 
-    private void Start()
+    public virtual void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         OnAnimationBackGround();
         SetUpPannel(TypeUI.ReturnMenu);
     }
 
+    public virtual void EnableDisableMenu() { }
     #region SetUpPannels
 
     [Header("Setting Panels")]
-    [SerializeField] private MenuPanel[] menuPanels;
-    [SerializeField] private float timeSpawnPanel = 1f;
-    [SerializeField] private float timeSpawnButton = 1f;
+    [SerializeField] protected MenuPanel[] menuPanels;
+    [SerializeField] protected float timeSpawnPanel = 1f;
+    [SerializeField] protected float timeSpawnButton = 1f;
 
-    private void SetUpPannel(TypeUI panelMenu)
+    public virtual void SetUpPannel(TypeUI panelMenu)
     {
         foreach (MenuPanel panel in menuPanels)
         {
@@ -81,6 +91,7 @@ public class ManagerMenu : MonoBehaviour
                 foreach (Button btn in buttonsInPannel)
                 {
                     btn.transform.localScale = Vector3.zero;
+                    btn.transform.localRotation = Quaternion.Euler(Vector3.zero);
                     btn.gameObject.SetActive(false);
                 }
 
@@ -90,6 +101,7 @@ public class ManagerMenu : MonoBehaviour
                     foreach (Slider slider in slidersInPannel)
                     {
                         slider.transform.localScale = Vector3.zero;
+                        slider.transform.localRotation = Quaternion.Euler(Vector3.zero);
                         slider.gameObject.SetActive(false);
                     }
                 }
@@ -134,7 +146,7 @@ public class ManagerMenu : MonoBehaviour
     #endregion
     #region SetUpButtons
     [Header("Setting Buttons")]
-    [SerializeField] private List<ButtonList> buttonList;
+    [SerializeField] protected List<ButtonList> buttonList;
     private void SetupButtons()
     {
         if (buttonList == null || buttonList.Count == 0) return;
@@ -148,7 +160,7 @@ public class ManagerMenu : MonoBehaviour
                 switch (list.Type)
                 {
                     case TypeUI.Resume:
-                        button.onClick.AddListener(NewGame);
+                        button.onClick.AddListener(Resume);
                         break;
 
                     case TypeUI.Continue:
@@ -160,23 +172,23 @@ public class ManagerMenu : MonoBehaviour
                         button.onClick.AddListener(OpenOption);
                         break;
 
-                    //case TypeUI.Credit:
-                    //    button.onClick.AddListener(OpenCredits);
-                    //    break;
+                    case TypeUI.Credit:
+                        button.onClick.AddListener(OpenCredits);
+                        break;
 
                     case TypeUI.ReturnMenu:
                         button.onClick.AddListener(ReturMenu);
                         break;
 
-                        //case TypeUI.Quit:
-                        //    button.onClick.AddListener(QuitGame);
-                        //    break;
+                    case TypeUI.Quit:
+                        button.onClick.AddListener(QuitGame);
+                        break;
                 }
             }
         }
     }
 
-    private void NewGame()
+    public virtual void Resume()
     {
         if(saveData != null)
         {
@@ -186,14 +198,15 @@ public class ManagerMenu : MonoBehaviour
         ContinueGame();
     }
 
-    private void ContinueGame()
+    public virtual void ContinueGame()
     {
         Utility.FadeBlackOrOutBlack(canvasBlackScreen, 1, 1, Ease.InQuad, gameObject, () => { SceneManager.LoadScene(nameLevel); });        
     }
 
-    private void OpenOption() => SetUpPannel(TypeUI.Option);
-
-    private void ReturMenu() => SetUpPannel(TypeUI.ReturnMenu);
+    public virtual void OpenOption() => SetUpPannel(TypeUI.Option);   
+    public virtual void OpenCredits() => SetUpPannel(TypeUI.Credit); 
+    public virtual void ReturMenu() => SetUpPannel(TypeUI.ReturnMenu);  
+    public virtual void QuitGame() => Application.Quit();
 
     #endregion
     #region Animatios

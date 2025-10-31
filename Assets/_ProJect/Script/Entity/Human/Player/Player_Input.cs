@@ -15,15 +15,23 @@ public class Player_Input : Human_BasicInput
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        OnHorizontalAndVerticalInput?.Invoke(horizontalInput, verticalInput);
+
+        if (Input.GetKeyDown(KeyCode.Escape)) ManagerMenuInGame.Instance.EnableDisableMenu();
 
         //             MovementCharacter            
 
-        //Walk
+        //Walk   
         if (Input.GetKeyDown(KeyCode.X)) OnWalk?.Invoke();
+        OnHorizontalAndVerticalInput?.Invoke(horizontalInput, verticalInput);
 
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) Time.timeScale = 0f;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) Time.timeScale = 1f;
+
+        if (ManagerMenuInGame.Instance.EnablePannelAll) return;
+        //             CombatCharacter 
         //AttacksList
-        if (Input.GetMouseButtonDown(0)) OnAttack?.Invoke(); // Attacco Leggero
+        if (Input.GetMouseButton(0)) OnAttack?.Invoke(); // Attacco Leggero
 
         //Defence
         if (Input.GetMouseButton(1)) OnDefence?.Invoke(true);
@@ -35,8 +43,5 @@ public class Player_Input : Human_BasicInput
         //Aim
         if (Input.GetKeyDown(KeyCode.Tab)) OnSerchEnemy?.Invoke();
         if (Input.GetKeyDown(KeyCode.E)) OnChangeEnemy?.Invoke();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)) Time.timeScale = 0.05f;
-        if (Input.GetKeyDown(KeyCode.Alpha2)) Time.timeScale = 1f;
     }
 }

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Human_StateDead : AbstractState
 {
     [SerializeField] private float timeToWaiteAnimationDead = 1f;
     private Human_BasicAnimator basicAnimator;
+
+    public UnityEvent OnDead;
 
     public override void StateEnter() 
     { 
@@ -19,6 +22,7 @@ public class Human_StateDead : AbstractState
     private IEnumerator DeadRoutine()
     {
         yield return new WaitForSeconds(timeToWaiteAnimationDead);
+        OnDead?.Invoke();
         controller.gameObject.SetActive(false);
     }
 

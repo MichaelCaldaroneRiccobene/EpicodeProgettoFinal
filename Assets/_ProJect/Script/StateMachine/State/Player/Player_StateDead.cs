@@ -1,13 +1,16 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player_StateDead : AbstractState
 {
     [SerializeField] private float timeToWaiteAnimationDead = 1f;
     private Human_BasicAnimator basicAnimator;
 
+    public UnityEvent OnDead;
     public override void StateEnter()
     {
         if (controller.CanSeeDebug) Debug.Log("Entrato in State Dead");
@@ -20,7 +23,8 @@ public class Player_StateDead : AbstractState
     private IEnumerator DeadRoutine()
     {
         yield return new WaitForSeconds(timeToWaiteAnimationDead);
-        
+
+        OnDead?.Invoke();
         ManagerSavePoint.Instance.RestorPlayer();
     }
 

@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 150
   recoverStaminaOnTimeStamina: 1
-  timeForRecoverStamina: 0.15
+  timeForRecoverStamina: 0.075
 --- !u!143 &4157107926412397014
 CharacterController:
   m_ObjectHideFlags: 0

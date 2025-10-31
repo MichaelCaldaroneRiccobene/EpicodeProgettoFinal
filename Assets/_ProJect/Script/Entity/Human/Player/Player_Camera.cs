@@ -19,6 +19,16 @@ public class Player_Camera : MonoBehaviour
     [SerializeField] private CinemachineFreeLook freeLook;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
+    private float currentSpeedCameraX;
+    private float currentSpeedCameraY;
+    private bool isOnMenu;
+
+    private void Start()
+    {
+        currentSpeedCameraX = freeLook.m_XAxis.m_MaxSpeed;
+        currentSpeedCameraY = freeLook.m_YAxis.m_MaxSpeed;
+    }
+
     private void Update()
     {
         float targetWeightZero = player_Controller.HasTarget ? blendCamOnTargetZero : blendCamOffTargetZero;
@@ -36,5 +46,21 @@ public class Player_Camera : MonoBehaviour
 
         freeLook.m_RecenterToTargetHeading.m_enabled = player_Controller.HasTarget ? true : false;
         freeLook.m_YAxisRecentering.m_enabled = player_Controller.HasTarget ? true : false;
+
+        if(isOnMenu != ManagerMenuInGame.Instance.EnablePannelAll)
+        {
+            isOnMenu = ManagerMenuInGame.Instance.EnablePannelAll;
+            if (isOnMenu)
+            {
+                freeLook.m_XAxis.m_MaxSpeed = 0f;
+                freeLook.m_YAxis.m_MaxSpeed = 0f;
+            }
+            else
+            {
+                freeLook.m_XAxis.m_MaxSpeed = currentSpeedCameraX;
+                freeLook.m_YAxis.m_MaxSpeed = currentSpeedCameraY;
+                Debug.Log("Reset Speed Camera");
+            }
+        }
     }
 }

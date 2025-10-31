@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObjTypePoolling { None,HitBlood,Audio, ImpactBoss,HitSword }
+public enum ObjTypePoolling { None = 0,HitBlood = 1, HitSword = 4,Audio = 2, ImpactBoss = 3}
 public class ManagerPooling : GenericSingleton<ManagerPooling>
 {
     [SerializeField] private List<PoolObject_SO> poolObjectsList;

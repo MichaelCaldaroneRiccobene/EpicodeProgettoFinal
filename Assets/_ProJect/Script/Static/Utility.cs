@@ -52,9 +52,9 @@ public static class Utility
     #endregion
 
 
-    public static void DelayAction(MonoBehaviour owner, float delay, System.Action action) => owner.StartCoroutine(DelayActionRoutine(delay, action));
+    public static void DelayAction(MonoBehaviour owner, float delay, Action action) => owner.StartCoroutine(DelayActionRoutine(delay, action));
 
-    private static IEnumerator DelayActionRoutine(float delay, System.Action action)
+    private static IEnumerator DelayActionRoutine(float delay, Action action)
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();

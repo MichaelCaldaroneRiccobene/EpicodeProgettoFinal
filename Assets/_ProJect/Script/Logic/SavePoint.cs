@@ -1,7 +1,5 @@
 using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +12,7 @@ public class SavePoint : MonoBehaviour
 
     [SerializeField] private CanvasGroup canvasGroupBlack;
     [SerializeField] private CanvasGroup cavansUI;
+    [SerializeField] private CanvasGroup canvasGroupPrompt;
 
     [SerializeField] private Transform spawnPoint;
 
@@ -47,6 +46,7 @@ public class SavePoint : MonoBehaviour
         currentPlayerController = player_Controller;
         ManagerSavePoint.Instance.SetCurrentSavePlayer(this);
         isOnSavePoint = true;
+        canvasGroupPrompt.DOFade(0f, 0.5f);
 
         canvasGroupBlack.DOFade(1, timeForDoActions).OnComplete(() =>
         {
@@ -135,6 +135,8 @@ public class SavePoint : MonoBehaviour
         ClearButtos();
         savePoint.SitUpExitActions();
 
+        isOnSavePoint = true;
+        canvasGroupPrompt.DOFade(0f, 0.5f);
         currentPlayerController = playerController;
         pannelUI.SetActive(false);
         ManagerSavePoint.Instance.SetCurrentSavePlayer(this);
@@ -159,6 +161,24 @@ public class SavePoint : MonoBehaviour
                 Cursor.visible = true;
             });
         });
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isOnSavePoint) return;
+
+        if (other.TryGetComponent(out Player_Controller player_Controller))
+        {
+            canvasGroupPrompt.DOFade(1f, 0.5f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Player_Controller player_Controller))
+        {
+            canvasGroupPrompt.DOFade(0f, 0.5f);
+        }
     }
 
     private void OnTriggerStay(Collider other)

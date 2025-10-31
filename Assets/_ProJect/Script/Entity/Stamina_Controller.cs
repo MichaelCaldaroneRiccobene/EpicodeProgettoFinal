@@ -19,7 +19,11 @@ public class Stamina_Controller : MonoBehaviour
 
     public Action<int, int> UpdateStaminaHud;
 
-    private void Start() => waitForSecondsStaminaRecover = new WaitForSeconds(timeForRecoverStamina);
+    private void Start()
+    {
+        waitForSecondsStaminaRecover = new WaitForSeconds(timeForRecoverStamina);
+        UpdateStaminaHud?.Invoke(stamina, maxStamina);
+    }
 
     private void OnEnable()
     {
@@ -59,6 +63,12 @@ public class Stamina_Controller : MonoBehaviour
             OnUpdateStamina(recoverStaminaOnTimeStamina);
         }
         onRecoverStamina = false;
+    }
+
+    public void RestorStamina()
+    {
+        stamina = maxStamina;
+        UpdateStaminaHud?.Invoke(stamina, maxStamina);
     }
 
     private void OnDisable()

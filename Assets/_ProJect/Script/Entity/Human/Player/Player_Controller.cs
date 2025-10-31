@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class Player_Controller : Human_Basic_Controller
@@ -29,5 +30,4 @@ public class Player_Controller : Human_Basic_Controller
     public override void UpdateLifeHud(int life, int maxLife) => Player_UI.Instance.UpdateLife(life, maxLife);
 
     public override void UpdateStaminaHud(int stamina, int maxStamina) => Player_UI.Instance.UpdateStamina(stamina, maxStamina);
-
 }

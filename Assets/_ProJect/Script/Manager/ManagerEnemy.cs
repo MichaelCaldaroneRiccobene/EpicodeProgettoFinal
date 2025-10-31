@@ -19,6 +19,9 @@ public class ManagerEnemy : GenericSingleton<ManagerEnemy>
             {
                 enemyRespawn.gameObject.SetActive(false);
                 enemyRespawn.gameObject.SetActive(true);
+
+                if (enemyRespawn.TryGetComponent(out LifeController life)) life.RestorHp();
+                if (enemyRespawn.TryGetComponent(out Stamina_Controller stamina)) stamina.RestorStamina();
             }
         }
     }

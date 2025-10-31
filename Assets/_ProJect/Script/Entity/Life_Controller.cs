@@ -10,9 +10,15 @@ public class LifeController : MonoBehaviour, I_Damageble
 
     private int life;
     private Vector3 saveHitPoint;
+    private bool stopDamage;
 
     public Action<int,int> UpdateLifeHud;
     public Action<int, Vector3> FisicalDamage;
+
+    private void Start()
+    {
+        UpdateLifeHud?.Invoke(life, maxLife);
+    }
 
     private void OnEnable()
     {
@@ -22,6 +28,11 @@ public class LifeController : MonoBehaviour, I_Damageble
 
     public void OnUpdateLife(int value)
     {
+        if(stopDamage) return;
+
+        stopDamage = true;
+
+        Utility.DelayAction(this, 0.5f, () => { stopDamage = false; });
         int currentLife = life;
         currentLife = Mathf.Clamp(currentLife + value,0,maxLife);
 
@@ -30,6 +41,7 @@ public class LifeController : MonoBehaviour, I_Damageble
             life = currentLife;
             if (saveHitPoint != Vector3.zero) ManagerPooling.Instance.GetObjFromPool(vfxBlood, saveHitPoint, Quaternion.identity);
 
+            Debug.Log("Physical Damage NEW: " + value, transform);
             hitSound.PlaySound(transform);
         }
         else if (currentLife > life)
@@ -58,5 +70,7 @@ public class LifeController : MonoBehaviour, I_Damageble
     {
         saveHitPoint = hitPoint;
         FisicalDamage?.Invoke(value, hitAttaker);
+
+        Debug.Log("Physical Damage: " + value,transform);
     }
 }

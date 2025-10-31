@@ -8,14 +8,25 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
 {
     [Header("Setting Hud")]
     [SerializeField] private GameObject hud;
-    [SerializeField] private Image imageLife;
-    [SerializeField] private Image imageStamina;
+
+    [SerializeField] private Slider sliderLife;
+    [SerializeField] private Slider sliderLifeYellow;
+
+    [SerializeField] private Slider sliderStamina;
+    [SerializeField] private Slider sliderStaminaYellow;
+
+    [SerializeField] private float delayUpdateYellowLife = 0.5f;
+    [SerializeField] private float speedUpdateYellowLife = 0.4f;
+
     [SerializeField] private GameObject inStoppableAttack;
 
     [SerializeField] private float walkSpeed = 1.7f;
     [SerializeField] private float jogSpeed = 3.4f;
 
     private NavMeshAgent agent;
+
+    private bool isUpdateYellowLife;
+    private bool isUpdateStamina;
 
     public float WalkSpeed => walkSpeed;
     public float JogSpeed => jogSpeed;
@@ -35,11 +46,35 @@ public class Npc_Controller : Human_Basic_Controller, I_Target
         inStoppableAttack.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (isUpdateYellowLife)
+        {
+            if (sliderLifeYellow.value > sliderLife.value) sliderLifeYellow.value -= speedUpdateYellowLife * Time.deltaTime;
+            else isUpdateYellowLife = false;
+        }
+
+        if (isUpdateStamina)
+        {
+            if (sliderStaminaYellow.value > sliderStamina.value) sliderStaminaYellow.value -= speedUpdateYellowLife * Time.deltaTime;
+            else isUpdateStamina = false;
+        }
+    }
+
+    public override  void UpdateLifeHud(int life, int maxLife)
+    {
+        sliderLife.value = (float)life / maxLife;
+
+        if (!isUpdateYellowLife) { Utility.DelayAction(this, delayUpdateYellowLife, () => { isUpdateYellowLife = true; }); }
+    }
+
+    public override void UpdateStaminaHud(int stamina, int maxStamina)
+    {
+        sliderStamina.value = (float)stamina / maxStamina;
+
+        if (!isUpdateStamina) { Utility.DelayAction(this, delayUpdateYellowLife, () => { isUpdateStamina = true; }); }
+    }
+
     public void SetOnOffTargetHud(bool value) => hud.SetActive(value);
-
-    public override void UpdateLifeHud(int life, int maxLife) => imageLife.fillAmount = (float)life /maxLife;
-
-    public override void UpdateStaminaHud(int stamina, int maxStamina) => imageStamina.fillAmount = (float)stamina/maxStamina;
-
     public void EnableDisableInStoppableAttack(bool value) => inStoppableAttack.SetActive(value);
 }

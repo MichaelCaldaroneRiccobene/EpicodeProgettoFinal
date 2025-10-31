@@ -26,6 +26,7 @@ public class BossEnter : MonoBehaviour
         Utility.DelayAction(this,0.5f, () =>
         {
             bossMan.gameObject.SetActive(true);
+            fog.isTrigger = false;
         });
        
     }

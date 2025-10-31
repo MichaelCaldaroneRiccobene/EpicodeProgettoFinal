@@ -9,6 +9,7 @@ public class Transition_OnHit : AbstractTransition
     private LifeController lifeController;
     private Stamina_Controller stamina_Controller;
     private bool isHit;
+    private bool iHit;
 
     public override void SetUp(FSM_Controller controller)
     {
@@ -48,6 +49,8 @@ public class Transition_OnHit : AbstractTransition
 
     public virtual void TakeDamage(int value,bool condition)
     {
+        if(iHit) return;
+        iHit = true;
         if (lifeController != null) lifeController.OnUpdateLife(value);
         else Debug.LogWarning("No Life controller ", transform);
 
@@ -59,6 +62,7 @@ public class Transition_OnHit : AbstractTransition
         base.OnEnable();
         if (lifeController != null) lifeController.FisicalDamage += FisicalDamage;
 
+        iHit = false;
         isHit = false;
     }
 
@@ -67,6 +71,7 @@ public class Transition_OnHit : AbstractTransition
         base.OnDisable();
         if (lifeController != null) lifeController.FisicalDamage -= FisicalDamage;
 
+        iHit = false;
         isHit = false;
     }
 }

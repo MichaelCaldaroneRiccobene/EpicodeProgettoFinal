@@ -20,10 +20,10 @@ public class FSM_Controller : MonoBehaviour
     public virtual void Awake()
     {
         availableStates = GetComponentsInChildren<AbstractState>();
-        foreach(AbstractState state in availableStates) state.SetUp(this);
+        foreach (AbstractState state in availableStates) state.SetUp(this);
 
         transitionsState = GetComponentsInChildren<AbstractTransition>();
-        foreach(AbstractTransition trans in transitionsState)
+        foreach (AbstractTransition trans in transitionsState)
         {
             trans.SetUp(this);
             trans.enabled = false;
